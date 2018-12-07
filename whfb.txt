@@ -1,0 +1,55 @@
+Weapon
+Price  | Enc | Availability |  Reach  | Damage | Qualities and Flaws
+a
+7      ;                   BASIC                    a |
+Hand Weapon                  1GC         1        Common       Medium      +SB+4 | -
+Improvised Weapon             N/A | Varies        N/A           Varies        +SB+1_| Undamaging
+Dagger                           16/—         0        Common | Very Short | +SB+2 | -
+Knife                             8/-          0        Common | Very Short | +SB+1 | Undamaging
+E                                                                 CAVALRY                                                                          i
+Cavalry Hammer            3GC         3}          Scarce           Long        +SB+5 | Pummel
+Lance                            1GC         3           Rare         Very Long | +SB+6* | Impact, Impale, Tiring
+FENCING                                                                         “|
+Foil                                   5GC           1            Scarce          Medium | +SB+3. | oo Ruano
+Undamaging
+Rapier                                5GC           1            Scarce             Long          +SB+4 _| Fast, Impale
+Be                                                                         FIST                                                                              j
+Fist                                    N/A           0               -              Personal        +SB+0 | =
+Knuckledusters                      2/6            0          Common         Personal        +SB+2 | -
+FLAIL
+Grain Flail                       10/-                   Common | Average | +SB+3 | Distract, Imprecise, Wrap
+Flail                                  2GC           Hy            Scarce           Average        +SB+5 | Distract, Wrap
+GH)Military Flail                 3GC                     Rare            Long        +SB+6 | Distract, Impact, Tiring, Wrap
+PARRY
+Main Gauche                   1GC         0           Rare         Very Short     +SB+2 | Defensive
+Shield (Buckler)                     18/2           0          Common         Personal        +SB+1 | Shield 1, Defensive, Undamaging
+Shield                                  2GC            1          Common       Very Short       +SB+2 | Shield 2, Defensive, Undamaging
+Shield (Large)                      3GC           3          Common       Very Short      +SB+3 | Shield 3, Defensive, Undamaging
+Swordbreaker                 1GC 2/6       i          Scarce           Short        +SB+3 | Defensive, Trap-blade
+POLEARM
+CM Halberd                      2GC         8        Common      Very Long     +SB+4 | Defensive, Hack, Impale
+20Spear                              15/-           2          Common           Long          +SB+4_ | Impale
+WPike                               18/-           4             Rare            Massive        +SB+4 | Impale
+Quarter Staff                 3/-          2        Common         Long        +SB+4 | Defensive, Pummel
+TWO-HANDED
+@WBastard Sword               8GC         3          Scarce           Long        +SB+5 | Damaging, Defensive
+Great Axe                       4GC           3            Scarce             Long          +SB+6 | Hack, Impact, Tiring
+OMPick                                9/-            3          Common | Medium | +SB+5 | Damaging, Impale,Tiring
+2! Warhammer                    3GC           3          Common | Medium | +SB+6 | Damaging, Pummel,Tiring
+20Zweihander                    10GC          3            Scarce             Long          +SB+5 | Damaging, Hack
+
+
+'
+
+[\n]+
+
+
+
+sed -i 's/
+(( |)\n)+
+/\n/g' 
+sed -i 's/^[^\p{Ll}]*$/\\\n/g'
+
+sed -i "" '/^[[:space:]]*$/d'
+
+
