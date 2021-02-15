@@ -1,0 +1,94 @@
+# A layout designed for a card to be held in your hand.
+#   * slotes align along the left-hand side.
+#   * Title along the top.
+#   * Middle area for artwork,
+#   * Room for a text description
+#   * And some theme-based text (which I like call the "snark")
+# Along the lines of Race for the Galaxy or 7 Wonders
+# Based on TheGameCrafter.com's Poker Card, which is 825x1125
+# Sample usage is found in samples/layouts.rb
+title:
+  extends: AllText
+  x: 75
+  y: 75
+  width: 675
+  height: 75
+  font_size: 45
+art:
+  x: 275
+  y: 175
+  width: 475
+  height: 475
+description:
+  valign: top
+  extends: AllText
+  x: 75
+  y: 750
+  width: 675
+  height: 250
+type:
+  extends: AllText
+  x: 75
+  y: 675
+  width: 675
+  height: 50
+snark:
+  extends: AllText
+  x: 75
+  y: 1025
+  width: 675
+  height: 25
+  font_size: 20
+  font: 'JSL Ancient italic'
+slot1:
+  extends: AllText
+  x: 75
+  y: 175
+  width:  175
+  height: 75
+slot2:
+  extends: slot1
+  y: += 100
+slot3:
+  extends: slot2
+  y: += 100
+slot4:
+  extends: slot3
+  y: += 100
+slot5:
+  extends: slot4
+  y: += 100
+
+background:
+  x: -1
+  y: -1
+  width: 826
+  height: 1126
+
+# The "cut line", without rounded corners
+cut:
+  extends: AllText
+  x: 37.5
+  y: 37.5
+  width: 750
+  height: 1050
+
+# The "safe zone" as defined by TheGameCrafter poker cards
+safe:
+  extends: AllText
+  x: 75
+  y: 75
+  width: 675
+  height: 975
+  radius: 16
+  dash: 3 3
+
+
+AllText:
+  markup: true  
+  align: center
+  valign: middle
+  font: 'JSL Ancient'
+  font_size: 35.5
+  color: 'black'
+  wrap: word

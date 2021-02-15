@@ -1,0 +1,212 @@
+.list {
+    display: list-item;
+    margin-left: 1.3em;
+    list-style-type: square;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+.wrapper-style {
+    /*max-width: 90vw;*/
+    /*font: 1.2em Helvetica, arial, sans-serif;*/
+}
+
+.wrapper-style>* {
+    border: 0.5px solid #f08c00;
+    /*background-color: #ffec99;*/
+    border-radius: 5px;
+    padding: 1em;
+}
+
+nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+.content {
+    min-height: auto;
+}
+
+
+
+/*
+@media  and (min-device-width: 480px){
+
+}
+*/
+
+/*.hidden {
+  display: none;
+  visibility: hidden;
+} */
+
+@media (min-width: 900px) {
+
+
+    body,
+    html {
+        /*overflow: hidden;*/
+        margin: 0;
+        padding: 0;
+    }
+
+
+
+}
+
+.highlight {
+    /*background: red;*/
+    /*border: 3px red dotted;*/
+    background: AliceBlue;
+}
+
+.semi-highlight {
+    background: Azure;
+}
+
+
+.card {
+    width: 300px;
+    height: 400px;
+    font-size: .1em;
+    border: 10px solid grey;
+    border-radius: 10px;
+}
+
+.attrib {
+    text-align: center;
+    text-transform: capitalize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.attrib-background {
+    background: url("../static/background.png") no-repeat center;
+    /*-webkit-background-size: cover;*/
+    /*-moz-background-size: cover;*/
+    /*-o-background-size: cover;*/
+    /*background-size: cover;*/
+    background-size: 100% 100%;
+    filter: brightness(115%);
+
+}
+
+.card-background {
+    background: url("../static/solid_background.png") no-repeat center;
+    background-size: 100% 100%;
+}
+
+
+svg {
+    padding: 20px;
+
+
+    fill: blue;
+    /*filter: invert(42%) sepia(93%) saturate(1352%) brightness(119%) */
+    width: 100%;
+    height: auto;
+    filter: blur(.5px) contrast(19%);
+}
+
+path {
+
+    fill: grey;
+    stroke: black;
+    stroke-width: 4em;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+        ". . ."
+        ". . ."
+        ". . .";
+}
+
+
+.grid-container {
+    padding: 5em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 10px 10px;
+    grid-template-areas:
+        "weight title title rarity"
+        "type damage image image"
+        "reach size image image"
+        "description description description description"
+        "description description description description"
+        "description description description description"
+        "description description description description"
+        "uniqueid flavour flavour cost";
+}
+
+.title {
+    grid-area: title;
+    font-weight: bold;
+  font-size: 7em;
+
+}
+
+.damage {
+    grid-area: damage;
+}
+
+.reach {
+    grid-area: reach;
+}
+
+.weight {
+    grid-area: weight;
+}
+
+.weight > .fas{
+    font-weight: 900;
+    color: gray;
+    padding-left: 3em;
+}
+
+.image {
+    grid-area: image;
+}
+
+.rarity {
+    grid-area: rarity;
+}
+
+.flavour {
+    grid-area: flavour;
+}
+
+.cost {
+    grid-area: cost;
+}
+
+.uniqueid {
+    grid-area: uniqueid;
+}
+
+.description {
+    grid-area: description;
+    text-align: justify;
+    padding: 10em;
+    text-transform: initial;
+
+}
+
+.type {
+    grid-area: type;
+}
+
+.size {
+    grid-area: size;
+}

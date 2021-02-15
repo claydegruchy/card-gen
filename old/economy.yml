@@ -1,0 +1,174 @@
+AllText:
+  align: center
+  font: 'JSL Ancient, 30.5'
+  color: 'black'
+  wrap: word
+  # color: 'black'
+
+
+# The "cut line", without rounded corners
+cut:
+  extends: AllText
+  x: 37.5
+  y: 37.5
+  width: 750
+  height: 1050
+
+
+#This layout inspired by popular economy games
+background:
+  x: -1
+  y: -1
+  width: 826
+  height: 1126
+
+title:
+  extends: AllText
+  x: 90
+  y: 90
+  width: 635
+  height: 50
+  font: 'Caslon Antique,bold 30.5'
+  align: center
+  font_size: 40
+
+art:
+  extends: AllText
+  x: 75
+  y: 150
+  width: 675
+  height: 550
+  # height: 520
+
+artmask:
+  extends: art
+
+description:
+  x: 100
+  y: 750
+  width: 625
+  height: 200
+  valign: middle
+  # align: left
+  font_size: 20
+  dash: 3 3
+  extends: AllText
+  markup: true
+  wrap: word
+desc: # alias
+  extends: description
+
+type:
+  extends: AllText
+  x: 90
+  y: 955
+  width: 645
+  height: 50
+  align: center
+
+lower_right:
+  extends: AllText
+  x: 675
+  y: 975
+  # width: 75
+  height: 75
+  # font_size: 15
+  valign: bottom
+  align: right
+lr: #alias
+  extends: lower_right
+
+lower_left:
+  extends: AllText
+  x: 75
+  y: 975
+  # width: 75
+  height: 75
+  # font_size: 15
+  valign: bottom
+  align: left
+ll: # alias
+  extends: lower_left
+
+
+
+
+middle_right:
+  extends: AllText
+  x: 450
+  y: 705
+  width: 300
+  height: 40
+  # font_size: 15
+  valign: middle
+  align: right
+lr: #alias
+  extends: middle_right
+
+middle_left:
+  extends: AllText
+  x: 75
+  y: 705
+  width: 300
+  height: 40
+  # font_size: 15
+  valign: middle
+  align: left
+ll: # alias
+  extends: middle_left
+
+
+
+
+upper_right:
+  extends: AllText
+  x: 675
+  y: 75
+  # width: 75
+  height: 75
+  # font_size: 15
+  valign: top
+  align: right
+lr: #alias
+  extends: upper_right
+
+upper_left:
+  extends: AllText
+  x: 75
+  y: 75
+  # width: 75
+  height: 75
+  # font_size: 15
+  valign: top
+  align: left
+ll: # alias
+  extends: upper_left
+
+copyright:
+  extends: AllText
+  x: 75
+  y: 1025
+  width: 675
+  height: 25
+  font_size: 12
+  align: center
+  valign: bottom
+#aliases for copyright
+copy:
+  extends: copyright
+credit:
+  extends: copyright
+credits:
+  extends: copyright
+
+
+
+# The "safe zone" as defined by TheGameCrafter poker cards
+safe:
+  extends: AllText
+  x: 75
+  y: 75
+  width: 675
+  height: 975
+  radius: 16
+  dash: 3 3
