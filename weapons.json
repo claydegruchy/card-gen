@@ -53,7 +53,7 @@
         "Reach": "Varies",
         "Damage": "+SB+1",
         "Qualities and Flaws": ["Undamaging"],
-        "Type": "BASIC",
+        "Type": "improvised",
         "Art": "ham-shank"
     },
     {
@@ -64,7 +64,7 @@
         "Reach": "Varies",
         "Damage": "+SB+1",
         "Qualities and Flaws": ["Undamaging"],
-        "Type": "BASIC",
+        "Type": "improvised",
         "Art": "beer-stein"
     },
     {
@@ -75,7 +75,7 @@
         "Reach": "Varies",
         "Damage": "+SB+1",
         "Qualities and Flaws": ["Undamaging"],
-        "Type": "BASIC",
+        "Type": "improvised",
         "Art": "socks"
     },
     {
@@ -86,7 +86,7 @@
         "Reach": "Varies",
         "Damage": "+SB+1",
         "Qualities and Flaws": ["Undamaging"],
-        "Type": "BASIC",
+        "Type": "improvised",
         "Art": "broken-bottle"
     },
     {
@@ -97,7 +97,7 @@
         "Reach": "Varies",
         "Damage": "+SB+1",
         "Qualities and Flaws": [],
-        "Type": "BASIC",
+        "Type": "improvised",
         "Art": "wooden-chair"
     },
     {
@@ -275,6 +275,7 @@
         "Reach": "Very Long",
         "Damage": "+SB+4",
         "Qualities and Flaws": ["Defensive", "Hack", "Impale"],
+        "Size": "two handed",
         "Type": "POLEARM",
         "Art": "halberd"
     },
@@ -286,6 +287,7 @@
         "Reach": "Long",
         "Damage": "+SB+4_",
         "Qualities and Flaws": ["Impale"],
+        "Size": "two handed",
         "Type": "POLEARM",
         "Art": "stone-spear"
     },
@@ -297,6 +299,7 @@
         "Reach": "Massive",
         "Damage": "+SB+4",
         "Qualities and Flaws": ["Impale"],
+        "Size": "two handed",
         "Type": "POLEARM",
         "Art": "glaive"
     },
@@ -322,7 +325,7 @@
         "Qualities and Flaws": ["Damaging", "Defensive"],
         "Size": "two handed",
         "Type": "",
-        "Art": "two handed-sword"
+        "Art": "two-handed-sword"
     },
     {
         "Title": "Great Axe",
@@ -379,7 +382,7 @@
         "Availability": "Scarce",
         "Reach": 20,
         "Damage": "+8",
-        "Qualities and Flaws": ["Blast 3", "Dangerous", "Reload 2"],
+        "Qualities and Flaws": ["Special Usage", "Blast 3", "Dangerous", "Reload 2"],
         "Size": "two handed",
         "Type": "BLACKPOWDER",
         "Art": "sawed-off-shotgun"
@@ -391,7 +394,7 @@
         "Availability": "Exotic",
         "Reach": 100,
         "Damage": "+9",
-        "Qualities and Flaws": ["Accurate", "Precise", "Reload 4", "Blackpowder", "Damaging"],
+        "Qualities and Flaws": ["Special Usage", "Accurate", "Precise", "Reload 4", "Blackpowder", "Damaging"],
         "Size": "two handed",
         "Type": "BLACKPOWDER",
         "Art": "arrow-scope"
@@ -403,7 +406,7 @@
         "Availability": "Scarce",
         "Reach": 50,
         "Damage": "+9",
-        "Qualities and Flaws": ["Dangerous", "Blackpowder", "Damaging", "Reload 3"],
+        "Qualities and Flaws": ["Special Usage", "Dangerous", "Blackpowder", "Damaging", "Reload 3"],
         "Size": "two handed",
         "Type": "BLACKPOWDER",
         "Art": "musket"
@@ -415,7 +418,8 @@
         "Availability": "Rare",
         "Reach": 20,
         "Damage": "+8",
-        "Qualities and Flaws": ["Blackpowder", "Damaging", "Pistol", "Reload 1"],
+        "Qualities and Flaws": ["Special Usage", "Blackpowder", "Damaging", "Pistol", "Reload 1"],
+        "Size": "one handed",
         "Type": "BLACKPOWDER",
         "Art": "crossed-pistols"
     },
@@ -474,7 +478,8 @@
         "Availability": "Scarce",
         "Reach": 10,
         "Damage": "+7",
-        "Qualities and Flaws": ["Pistol"],
+        "Qualities and Flaws": ["Special Usage","Pistol"],
+        "Size": "one handed",
         "Type": "CROSSBOW",
         "Art": "pocket-bow"
     },
@@ -485,7 +490,7 @@
         "Availability": "Rare",
         "Reach": 100,
         "Damage": "+9",
-        "Qualities and Flaws": ["Damaging", "Reload 2"],
+        "Qualities and Flaws": ["Special Usage","Damaging", "Reload 2"],
         "Size": "two handed",
         "Type": "CROSSBOW",
         "Art": "arrow-cluster"
@@ -497,7 +502,7 @@
         "Availability": "Common",
         "Reach": 60,
         "Damage": "+9",
-        "Qualities and Flaws": ["Reload 1"],
+        "Qualities and Flaws": ["Special Usage","Reload 1"],
         "Size": "two handed",
         "Type": "CROSSBOW",
         "Art": "crossbow"
@@ -509,7 +514,7 @@
         "Availability": "Rare",
         "Reach": 30,
         "Damage": "+9",
-        "Qualities and Flaws": ["Dangerous", "Reload 5", "Blackpowder", "Damaging", "Repeater 4"],
+        "Qualities and Flaws": ["Special Usage","Dangerous", "Reload 5", "Blackpowder", "Damaging", "Repeater 4"],
         "Size": "two handed",
         "Type": "ENGINEERING",
         "Art": "chaingun"
@@ -521,7 +526,8 @@
         "Availability": "Rare",
         "Reach": 10,
         "Damage": "+8",
-        "Qualities and Flaws": ["Repeater 4", "Blackpowder", "Damaging"],
+        "Qualities and Flaws": ["Special Usage","Repeater 4", "Blackpowder", "Damaging"],
+        "Size": "one handed",
         "Type": "ENGINEERING",
         "Art": "chaingun"
     },
@@ -554,7 +560,7 @@
         "Availability": "Rare",
         "Reach": "SB",
         "Damage": "+12",
-        "Qualities and Flaws": ["Blast 5", "Dangerous", "Impact"],
+        "Qualities and Flaws": ["Special Usage","Blast 5", "Dangerous", "Impact"],
         "Type": "EXPLOSIVES",
         "Art": "unlit-bomb"
     },
@@ -565,7 +571,7 @@
         "Availability": "Scarce",
         "Reach": "SB",
         "Damage": "Special",
-        "Qualities and Flaws": ["Blast 4", "Dangerous", "Incendiary"],
+        "Qualities and Flaws": ["Special Usage","Blast 4", "Dangerous", "Incendiary"],
         "Type": "EXPLOSIVES",
         "Art": "sparky-bomb"
     },
@@ -599,7 +605,7 @@
         "Availability": "Rare",
         "Reach": "SBx3",
         "Damage": "+SB",
-        "Qualities and Flaws": ["Entangle"],
+        "Qualities and Flaws": ["Special Usage", "Entangle"],
         "Type": "THROWING",
         "Art": "bolas"
     },
@@ -610,7 +616,7 @@
         "Availability": "Scarce",
         "Reach": "SBx2",
         "Damage": "+SB+1",
-        "Qualities and Flaws": ["Impale"],
+        "Qualities and Flaws": ["Special Usage", "Impale"],
         "Type": "THROWING",
         "Art": "dart"
     },
@@ -621,7 +627,7 @@
         "Availability": "Scarce",
         "Reach": "SBx3",
         "Damage": "+SB+3",
-        "Qualities and Flaws": ["Impale"],
+        "Qualities and Flaws": ["Special Usage", "Impale"],
         "Type": "THROWING",
         "Art": "thrown-spear"
     },
@@ -632,7 +638,7 @@
         "Availability": "Common",
         "Reach": "SBx3",
         "Damage": "+SB+0",
-        "Qualities and Flaws": null,
+        "Qualities and Flaws": ["Special Usage", ],
         "Type": "THROWING",
         "Art": "rock"
     },
@@ -643,7 +649,7 @@
         "Availability": "Average",
         "Reach": "SBx2",
         "Damage": "+SB+3",
-        "Qualities and Flaws": ["Hack"],
+        "Qualities and Flaws": ["Special Usage", "Hack"],
         "Type": "THROWING",
         "Art": "axe-swing"
     },
@@ -654,7 +660,7 @@
         "Availability": "Common",
         "Reach": "SBx2",
         "Damage": "+SB+2",
-        "Qualities and Flaws": null,
+        "Qualities and Flaws": ["Special Usage", ],
         "Type": "THROWING",
         "Art": "thrown-knife"
     },
@@ -677,7 +683,7 @@
         "Availability": "Common",
         "Reach": "Half weapon",
         "Damage": "+0",
-        "Qualities and Flaws": [""],
+        "Qualities and Flaws": [],
         "Type": "Ammunition",
         "Art": "three-burning-balls"
     },
@@ -726,7 +732,7 @@
         "Art": "arrowhead"
     },
     {
-        "Title": "Lead Sling Bullet (12)",
+        "Title": "Lead Bullet (12)",
         "Price": "4d",
         "Enc": 0,
         "Availability": "Common",
@@ -737,7 +743,7 @@
         "Art": "stone-sphere"
     },
     {
-        "Title": "Stone Sling Bullet (12)",
+        "Title": "Stone Bullet (12)",
         "Price": "4d",
         "Enc": 0,
         "Availability": "Common",

@@ -13,8 +13,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "isotope-layout": "^3.0.6",
-    "rword": "^3.2.0",
-    "tippy.js": "^5.1.2"
+    "rword": "^3.2.0"
   }
 }

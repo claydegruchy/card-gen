@@ -1,127 +1,74 @@
 window.addEventListener("load", async e => {
-    var weapons = require("./weapons.json");
-    var qualities = require("./qualities.json");
-    var { rword } = require("rword");
+
+    var weaponGen = await require("./card-gen.js").data()
+    if (document.querySelector('#cardDump')) {
+        weapons = weaponGen.weapons
+            // .filter(e => e.Availability.toLowerCase() != "exotic")
+            .map(async (e, i) => weaponGen.generateCard(e, { i })
+                .then(card => document.querySelector('#cardDump').innerHTML += card))
+    }
+    if (document.querySelector('#cardMake')) {
+        var defaultWeapon = weaponGen.weapons[24];
+        refresh = (weapon) => weaponGen.generateCard(weapon)
+            .then(card => document.querySelector('#cardMake').innerHTML = card)
 
 
-    var wewe = Object.entries(qualities)
-        .sort(function(a, b) {
-            if (a[1].length < b[1].length) { return -1; }
-            if (a[1].length > b[1].length) { return 1; }
-            return 0;
-        })
-        .filter(e => e[1].length > 100)
-        .map(e => e[0])
-    // .filter(e => e[1]==true)
-
-    // console.log(rword.generate(1, { contains: /.*er$/ }))
-    // add extra for variable (Rating) weapons
-    Object.keys(qualities)
-        .filter(qual => qual.includes("(Rating)"))
-        .map(qual => {
-            var totalRatings = 6;
-            Array.from(new Array(totalRatings)).forEach((sd, i) => {
-                i += 1
-                var nd = qualities[qual]
-                var nn = qual
-                nn = nn.replace("(Rating)", i)
-                nd = nd.replace("(Rating)", i)
-                qualities[nn] = nd
-            })
-            delete qualities[qual]
-        })
-
-    Array.prototype.randomElement = function() {
-        return this[Math.floor(random() * this.length)];
-    };
+        // ingredientsSelector = new SlimSelect({
+        //     select: ".ingredients-selector",
+        //     placeholder: "What will you add to this potion?",
+        //     limit: pm.options.maxComponents,
+        //     data: generateComponentOptions(),
+        //     showOptionTooltips: true,
+        //     // afterClose: function(t) {
+        //     //     this.open();
+        //     //     console.log('beforeClose' )
+        //     // },
+        //     // beforeClose: function(t) {
+        //     //     this.open();
+        //     //     console.log('beforeClose' )
+        //     // },
+        //     closeOnSelect: false,
+        //     onChange: info => {
+        //         console.log("info", info);
+        //     }
+        // });
 
 
-    var cardTemplate = Handlebars.compile(`
-<div class="grid-container card card-background">
-    <div class="attrib attrib-background title">{{title}}</div>
-    <div class="attrib attrib-background damage">{{damage}}</div>
-    <div class="attrib attrib-background reach">{{reach}}</div>
-    <div class="attrib attrib-background weight">{{{weight}}}</div>
-    <div class="attrib attrib-background image">
-        <div class="img">
-            {{{image}}}
-        </div>
-    </div>
-    <div class="attrib attrib-background rarity">{{rarity}}</div>
-    <div class="attrib attrib-background flavour">{{flavour}}</div>
-    <div class="attrib attrib-background cost">{{cost}}</div>
-    <div class="attrib attrib-background uniqueid">{{uniqueid}}</div>
-    <div class="attrib attrib-background description">{{{description}}}</div>
-    <div class="attrib attrib-background type">{{type}}</div>
-    <div class="attrib attrib-background size">{{size}}</div>
+
+
+        var optionTemplate = Handlebars.compile(`
+<div class="options grid-container">
+    <input placeholder="title" value="{{title}}" class="option title"></input>
+    <input placeholder="damage" value="{{damage}}" class="option damage"></input>
+    <input placeholder="reach" value="{{reach}}" class="option reach"></input>
+    <input placeholder="weight" value="{{{weight}}}" class="option weight"></input>
+    <input placeholder="image" value="{{image}}" class="option image"></input>
+    <input placeholder="rarity" value="{{rarity}}" class="option rarity"></input>
+    <input placeholder="flavour" value="{{flavour}}" class="option flavour"></input>
+    <input placeholder="cost" value="{{cost}}" class="option cost"></input>
+    <input placeholder="uniqueid" value="{{uniqueid}}" class="option uniqueid"></input>
+    <input placeholder="description" value="{{{description}}}" class="option description"></input>
+    <input placeholder="type" value="{{type}}" class="option type"></input>
+    <input placeholder="size" value="{{size}}" class="option size"></input>
 </div>
-                                `)
+      `)
 
-    var qualityTemplate = Handlebars.compile(`
-    <div>
-    {{#each this}}
-    <div><b>{{this.name}}:</b> {{this.desc}}</div>
-    {{/each}}
-</div>
+        // text.addEventListener('change', e => save(title, text.value));
+        // text.addEventListener('keyup', e => save(title, text.value));
+
+
+        //populate the options
         
-        `)
+
+        document.querySelector('#cardOptions').innerHTML = optionTemplate(await weaponGen.mapFields(weaponGen.weapons[24]))
+        //connect options to listeners
 
 
-    var getSVG = async url => fetch(url)
 
-    var imageURL = name => `../static/icons/${name}.svg`
-    var qualLookup = (quals) => {
-        if (!quals) return ""
-        var nq = quals
-            .map(e => ({
-                desc: qualities[e],
-                // desc: truncate(qualities[e], 100),
-                name: e
-            }))
-        // console.log(nq)
-        return qualityTemplate(nq)
+
+        refresh(defaultWeapon)
 
     }
-
-
-    function truncate(str, n) {
-        if (!str) return str
-        return (str.length > n) ? str.substr(0, n - 1) : str;
-    };
-
-    var names = rword.generate(weapons.length, { length: '3-5' })
-
-    var generateCard = async (data, attrib) => {
-
-        var compileData = async (e, i) => ({
-            title: e.Title,
-            damage: "Damage: "+e.Damage,
-            reach: e.Reach,
-            weight: e.Enc+`    <i class="fas fa-weight-hanging"></i>`,
-            image: await getSVG(imageURL(e.Art))
-                .then(r => r.text())
-                .then(r => r.replace(` fill="#fff"`, ``)),
-            rarity: e.Availability,
-            cost: e.Price,
-            description: qualLookup(e["Qualities and Flaws"]),
-            type: (e.Type || "basic").toLowerCase(),
-            flavour: "this is where the flavour goes",
-            uniqueid: names[i],
-            size: e.Size || "One handed",
-
-        })
-        var card = cardTemplate(await compileData(data, attrib.i))
-
-        return await card
-
-
-    }
-
-
-    weapons = weapons.map(async (e, i) => generateCard(e, { i })
-        .then(card => document.querySelector('#cardDump').innerHTML += card))
-
-
 
     // document.querySelector('#cardDump').innerHTML += cardTemplate(props)
     // document.querySelector('#cardDump').innerHTML += cardTemplate(props)
