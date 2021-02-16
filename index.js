@@ -23,16 +23,17 @@ window.addEventListener("load", async e => {
                 .map(icon => ({ text: icon, value: icon, selected: e.image.includes(icon) })),
             rarity: e => [...new Set(cardGen.weapons
                     .map(w => w.Availability))]
-                .map(i => ({ text: i, value: i })),
+                .map(i => ({ text: i, value: i, selected: e.rarity.includes(i) })),
             description: e => Object.keys(cardGen.qualities)
                 .map(i => ({ text: i, value: i, selected: e.description.includes(i) })),
             type: e => [...new Set(cardGen.weapons
                     .map(w => w.Type))]
-                .map(i => ({ text: i, value: i })),
+                .map(i => ({ text: i, value: i, selected: e.type.includes(i) })),
         }
         console.log(uiOptions)
 
-
+        var shit = e => this.constructor.name
+        console.log(shit())
 
         refresh = (weapon) => cardGen.runCompile(weapon)
             .then(card => {
