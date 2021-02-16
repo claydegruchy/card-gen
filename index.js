@@ -62,6 +62,7 @@ window.addEventListener("load", async e => {
 			    <select data-key="type" placeholder="type" value="{{type}}" class="option type"></select>
 			    <input data-key="size" placeholder="size" value="{{size}}" class="option size"></input>
 			</div>
+			
       `)
 
 

@@ -1,5 +1,14 @@
 ## WFRP card generator
-Simple card maker
+A tool to make WFRP cards. Can either 
+
+### Bulk generate all default weapons
+https://claydegruchy.github.io/card-gen/
+
+### Make custom cards
+https://claydegruchy.github.io/card-gen/card-maker
+
+## TODO
+- make configurable card layout
 
 ## Running locally
 - clone this
