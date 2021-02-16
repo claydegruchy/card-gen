@@ -97,9 +97,12 @@ exports.data = async function() {
         `)
 
 
-    var getSVG = async url => fetch(url)
+    
+    var imageURL = name => `./static/icons/${name}.svg`
+if (location.hostname === "localhost") var imageURL = name => `../static/icons/${name}.svg`
 
-    var imageURL = name => `../static/icons/${name}.svg`
+
+
     var qualLookup = (quals) => {
         if (!quals) return ""
         if (!Array.isArray(quals)) quals = quals.split(",")
@@ -141,7 +144,7 @@ exports.data = async function() {
 
     var compileData = {
         damage: e => "Damage: " + e.damage,
-        image: async e => await getSVG(imageURL(e.image)).then(r => r.text()).then(r => r.replace(` fill="#fff"`, ``)),
+        image: async e => await fetch(imageURL(e.image)).then(r => r.text()).then(r => r.replace(` fill="#fff"`, ``)),
         type: e => (e.type || defaults.fields.type).toLowerCase(),
         flavour: e => (e.flavour || defaults.fields.flavour),
         uniqueid: (e, i) => e.uniqueid || i && names[i] || rword.generate(1, { length: '3-5' }),
