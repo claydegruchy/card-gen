@@ -3,6 +3,16 @@ exports.data = async function() {
     var weapons = require("./weapons.json");
     var qualities = require("./qualities.json");
 
+    var defaults = {
+        fields: {
+            type: "basic",
+            flavour: "this is where the flavour goes",
+            size: "One handed",
+            uniqueid: "NO UNIQUE ID",
+            image: "meat",
+        }
+    }
+
 
 
     async function objectPromise(object) {
@@ -92,6 +102,8 @@ exports.data = async function() {
     var imageURL = name => `../static/icons/${name}.svg`
     var qualLookup = (quals) => {
         if (!quals) return ""
+        if (!Array.isArray(quals)) quals = quals.split(",")
+
         var nq = quals
             .map(e => ({
                 desc: qualities[e],
@@ -127,23 +139,17 @@ exports.data = async function() {
         size: e.Size,
     })
 
-
-
     var compileData = {
         damage: e => "Damage: " + e.damage,
         image: async e => await getSVG(imageURL(e.image)).then(r => r.text()).then(r => r.replace(` fill="#fff"`, ``)),
+        type: e => (e.type || defaults.fields.type).toLowerCase(),
+        flavour: e => (e.flavour || defaults.fields.flavour),
+        uniqueid: (e, i) => e.uniqueid || i && names[i] || rword.generate(1, { length: '3-5' }),
+        size: e => e.size || defaults.fields.size,
         description: e => qualLookup(e.description),
-        type: e => (e.type || "basic").toLowerCase(),
-        flavour: e => "this is where the flavour goes",
-        uniqueid: (e, i) => i && names[i] || rword.generate(1, { length: '3-5' }),
-        size: e => e.size || "One handed",
+        weight: e => e.weight + `<i class="fas fa-weight-hanging"></i>`,
 
     }
-
-
-
-
-
 
     var runCompile = async (e, i = 1) => {
         var o = { ...e }
@@ -167,17 +173,14 @@ exports.data = async function() {
         return await temp
     }
 
-
-
-
-
-    // document.querySelector('#cardDump').innerHTML += cardTemplate(props)
-    // document.querySelector('#cardDump').innerHTML += cardTemplate(props)
     return {
         generateCard,
         weapons,
         qualities,
         mapFields,
+        cardTemplate,
+        runCompile,
+        defaults,
     }
 
 

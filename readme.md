@@ -1,5 +1,5 @@
-## WFRP Skill Reference
-A simple tool to allow easy look up and cross reference skills, abilities and talents. Highlights skills that have the same core characteristics.
+## WFRP card generator
+Simple card maker
 
 ## Running locally
 - clone this
