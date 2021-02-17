@@ -7,8 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "echo starting;reload -b & watchify index.js -o bundle.js",
     "makeicons": "python -c 'import os, json; print json.dumps([[x,x.replace(\".svg\",\"\")] for x in os.listdir(\"static/icons/\")])' > icon-list.json"
-
-
   },
   "pre-commit": [
     "makeicons"
@@ -20,6 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "pre-commit": "^1.2.2",
-    "rword": "^3.2.0"
+    "rword": "^3.2.0",
+    "sweetalert2": "^10.15.2"
   }
 }

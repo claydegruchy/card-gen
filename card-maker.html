@@ -41,7 +41,8 @@
 }
 
 
-.ss-main .ss-single-selected, .ss-main .ss-multi-selected {
+.ss-main .ss-single-selected,
+.ss-main .ss-multi-selected {
     height: 100%;
 }
 
@@ -58,15 +59,20 @@
                     Card maker
                 </h4>
             </center>
-        </div>
-        <div id="fuck"></div>
-        <div class="make-grid-container wrapper-style">
-            <div class="make-options" id="cardOptions"></div>
-            <div class="make-card" id="cardMake"></div>
-        </div>
+            <div class=" container main-footer">
+                <select id="presets"></select>
+                <button class="pure-button" id="export">export</button>
+                <button class="pure-button" id="import">import</button>
+            </div>
+            </div>
+            <div class="make-grid-container wrapper-style">
+                <div class="make-options" id="cardOptions"></div>
+                <div class="make-card" id="cardMake"></div>
+            </div>
 </body>
 <script src="bundle.js"></script>
 <script type="text/javascript">
 </script>
+<footer><div class="inline">Made by CCMD</div></footer>
 
 </html>

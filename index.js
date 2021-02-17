@@ -1,6 +1,7 @@
 window.addEventListener("load", async e => {
 
     var cardGen = await require("./card-gen.js").data()
+    const Swal = require('sweetalert2')
 
     if (document.querySelector('#cardDump')) {
         weapons = cardGen.weapons
@@ -15,31 +16,28 @@ window.addEventListener("load", async e => {
         iconList = [...new Set(cardGen.weapons
             .map(w => w.Art))]
 
+
+
         var defaultWeapon = await cardGen.mapFields(cardGen.weapons[24])
         console.log(defaultWeapon)
 
         var uiOptions = {
-            image: e => iconList
-                .map(icon => ({ text: icon, value: icon, selected: e.image.includes(icon) })),
+            image: e => {
+                if (!iconList.includes(e.image)) {
+                    iconList.push(e.image)
+                }
+                return iconList
+                    .map(icon => ({ text: icon, value: icon, selected: e.image.includes(icon) }))
+            },
             rarity: e => [...new Set(cardGen.weapons
                     .map(w => w.Availability))]
                 .map(i => ({ text: i, value: i, selected: e.rarity.includes(i) })),
             description: e => Object.keys(cardGen.qualities)
-                .map(i => ({ text: i, value: i, selected: e.description.includes(i) })),
+                .map(i => ({ text: i, value: i, selected: e.description && e.description.includes(i) })),
             type: e => [...new Set(cardGen.weapons
                     .map(w => w.Type))]
                 .map(i => ({ text: i, value: i, selected: e.type.includes(i) })),
         }
-        console.log(uiOptions)
-
-        var shit = e => this.constructor.name
-        console.log(shit())
-
-        refresh = (weapon) => cardGen.runCompile(weapon)
-            .then(card => {
-                // console.log(card)
-                document.querySelector('#cardMake').innerHTML = cardGen.cardTemplate(card)
-            })
 
 
 
@@ -71,38 +69,48 @@ window.addEventListener("load", async e => {
 
 
 
-
+        var mainOperatingArea = document.querySelector('#cardOptions')
         //populate the options
-        document.querySelector('#cardOptions').innerHTML = optionTemplate(defaultWeapon)
+        mainOperatingArea.innerHTML = optionTemplate(defaultWeapon)
 
         //config the selects
-        var selects = [...document.querySelectorAll("select")]
-        var inputs = [...document.querySelectorAll("input, textarea, select")]
-
-
-        selects.forEach(select => {
+        var selects = [...mainOperatingArea.querySelectorAll("select.option")]
+        var allInputTypes = [...mainOperatingArea.querySelectorAll("input, textarea, select")]
 
 
 
-            new SlimSelect({
-                select: select,
-                placeholder: "How do you want to prepare these ingredients?",
-                data: uiOptions[select.dataset.key](defaultWeapon),
-                closeOnSelect: true,
+        var populateOptionFields = weaponInfo => {
+            var inputs = [...document.querySelectorAll("input")]
+            inputs
+                .forEach(i => {
+                    console.log(weaponInfo[i.dataset.key])
+                    i.value = weaponInfo[i.dataset.key] || ""
+                })
 
-            });
+            selects.forEach(select => {
+                new SlimSelect({
+                    select: select,
+                    placeholder: select.dataset.key,
+                    data: uiOptions[select.dataset.key](weaponInfo),
+                    closeOnSelect: true,
 
+                    addable: function(value) {
+                        // return false or null if you do not want to allow value to be submitted
+                        if (!["image", "description"].includes(select.dataset.key)) return false;
+                        return {
+                            text: value,
+                            value: value.toLowerCase()
+                        }
+                    }
+                });
+            })
+        }
 
-        })
+        populateOptionFields(defaultWeapon)
 
         //make a fucntion to get the values of the fields
         var getInputInfo = async () => {
-
-
-
-
-            var w = inputs.map(i => {
-
+            var w = allInputTypes.map(i => {
                 var selected = [...document.querySelectorAll(`select[multiple][data-key=${i.dataset.key}] option:checked`)]
                     .map(el => el.value)
                 var v = i.value
@@ -111,7 +119,6 @@ window.addEventListener("load", async e => {
                 } else {
                     selected = null
                 }
-
                 return {
                     [i.dataset.key]: v || selected || cardGen.defaults.fields[i.dataset.key]
                 }
@@ -119,8 +126,21 @@ window.addEventListener("load", async e => {
             console.log(w)
             return await Object.assign({}, ...w)
         }
+
+
+        //get the current input on the first run
+        var currentInput = await getInputInfo()
+
+
+
+        //make the refresh function
+        var refresh = (weapon) => cardGen.runCompile(weapon)
+            .then(card =>
+                document.querySelector('#cardMake').innerHTML = cardGen.cardTemplate(card)
+            )
+
         //connect options to listeners
-        inputs.map(i => {
+        allInputTypes.map(i => {
 
 
             i.addEventListener('change', e => getInputInfo()
@@ -133,17 +153,74 @@ window.addEventListener("load", async e => {
         })
 
 
-        //get the current input on the first run
-        var currentInput = await getInputInfo()
-        // console.log(currentInput)
         //update the card template with that info
         refresh(currentInput)
 
+
+        // make a list of presests to choos from 
+
+        var presetList = await Promise.all(cardGen.weapons.map(async w => await cardGen.mapFields(w)))
+
+        new SlimSelect({
+            select: "#presets",
+            searchPlaceholder: "Select a preset weapon template",
+            data: presetList.map(w => ({ text: w.title, value: w.title })),
+            closeOnSelect: true,
+            onChange: async e => {
+                populateOptionFields(presetList.find(w => w.title == e.value))
+                refresh(await getInputInfo())
+                // populateOptionFields())
+            }
+        });
+
+        // config exporter
+        document.getElementById("export").onclick = async e => {
+            var inp = JSON.stringify(await getInputInfo(), null, 2)
+            Swal.fire({
+                    input: 'textarea',
+                    title: 'Export data',
+                    text: 'Copy your data string below',
+                    inputValue: inp,
+                    inputAttributes: {
+                        'aria-label': 'Type your message here',
+                    },
+                    showCancelButton: true,
+                })
+                .disableInput()
+        };
+        //config importer
+        document.getElementById("import").onclick = e => {
+            Swal.fire({
+                    input: 'textarea',
+                    inputPlaceholder: 'Enter your weapon info...',
+                    title: 'Import data',
+                    text: 'Paste your weapon string below',
+                    inputAttributes: {
+                        'aria-label': 'Type your message here',
+                    },
+                    showCancelButton: true,
+                })
+                .then(o => JSON.parse(o.value))
+                .then(o => populateOptionFields(o))
+                .then(async o => refresh(await getInputInfo()))
+                .then(m => {
+                    if (m != 'success') {
+                        return ""
+                    } else {
+                        updateTemplate();
+                        return Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Data set loaded',
+                            timer: 1300
+                        })
+                    }
+                })
+                .catch(e => Swal.fire({
+                    icon: 'error',
+                    title: 'Import failed',
+                    text: 'Something went wrong! ' + e,
+                }))
+        };
     }
-
-    // document.querySelector('#cardDump').innerHTML += cardTemplate(props)
-    // document.querySelector('#cardDump').innerHTML += cardTemplate(props)
-
-
-
 })

@@ -96,12 +96,14 @@ nav {
     /*background-size: cover;*/
     background-size: 100% 100%;
     filter: brightness(115%);
+     -webkit-print-color-adjust: exact;
 
 }
 
 .card-background {
     background: url("../static/solid_background.png") no-repeat center;
     background-size: 100% 100%;
+     -webkit-print-color-adjust: exact;
 }
 
 
@@ -122,6 +124,14 @@ path {
     stroke: black;
     stroke-width: 4em;
 }
+
+.inline{
+    display:inline;
+
+}
+
+
+
 
 .card-container {
     display: grid;
@@ -185,6 +195,8 @@ path {
 
 .flavour {
     grid-area: flavour;
+      font-style: italic;
+
 }
 
 .cost {

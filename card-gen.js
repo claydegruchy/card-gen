@@ -10,7 +10,10 @@ exports.data = async function() {
             size: "One handed",
             uniqueid: "NO UNIQUE ID",
             image: "meat",
-        }
+            weight:0,
+        },
+
+        descriptionCustomeRuleTitle: "Custom Rule"
     }
 
 
@@ -89,17 +92,17 @@ exports.data = async function() {
 
     var qualityTemplate = Handlebars.compile(`
     <div>
-    {{#each this}}
-    <div><b>{{this.name}}:</b> {{this.desc}}</div>
-    {{/each}}
-</div>
+        {{#each this}}
+            <div><b>{{this.name}}:</b> <div class="inline">{{this.desc}}</div></div>
+        {{/each}}
+    </div>
         
         `)
 
 
-    
+
     var imageURL = name => `./static/icons/${name}.svg`
-if (location.hostname === "localhost") var imageURL = name => `../static/icons/${name}.svg`
+    if (location.hostname === "localhost") var imageURL = name => `../static/icons/${name}.svg`
 
 
 
@@ -108,11 +111,12 @@ if (location.hostname === "localhost") var imageURL = name => `../static/icons/$
         if (!Array.isArray(quals)) quals = quals.split(",")
 
         var nq = quals
-            .map(e => ({
-                desc: qualities[e],
-                // desc: truncate(qualities[e], 100),
-                name: e
-            }))
+            .map(e => {
+                return {
+                    desc: (qualities[e] ? qualities[e] : e),
+                    name: (qualities[e] ? e : defaults.descriptionCustomeRuleTitle),
+                }
+            })
         // console.log(nq)
         return qualityTemplate(nq)
 
