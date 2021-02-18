@@ -10,49 +10,14 @@
     <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
     <!--  -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.23.0/slimselect.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.23.0/slimselect.min.css" rel="stylesheet">
 </head>
-<style type="text/css">
-.make-grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    gap: 0px 0px;
-    grid-template-areas:
-        "make-options make-card";
-}
 
-.make-options {
-    grid-area: make-options;
-}
-
-.make-card {
-    grid-area: make-card;
-}
-
-.options {
-    width: 300px;
-    height: 400px;
-    font-size: .1em;
-    /*border: 10px solid grey;*/
-    /*border-radius: 10px;*/
-    page-break-after: always;
-}
-
-
-.ss-main .ss-single-selected,
-.ss-main .ss-multi-selected {
-    height: 100%;
-}
-
-.ss-main {
-    padding: 0px;
-}
-</style>
 
 <body>
-    <div class=" wrapper-style">
+    <div class="non-printable wrapper-style">
         <div class="main-head">
             <center>
                 <h4>
@@ -67,7 +32,7 @@
             </div>
             <div class="make-grid-container wrapper-style">
                 <div class="make-options" id="cardOptions"></div>
-                <div class="make-card" id="cardMake"></div>
+                <div class="make-card printable" id="cardMake"></div>
             </div>
 </body>
 <script src="bundle.js"></script>

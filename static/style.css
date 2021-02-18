@@ -1,63 +1,94 @@
-.list {
-    display: list-item;
-    margin-left: 1.3em;
-    list-style-type: square;
-}
+@media screen {
+    .list {
+        display: list-item;
+        margin-left: 1.3em;
+        list-style-type: square;
+    }
 
 
-* {
-    box-sizing: border-box;
-}
+    * {
+        box-sizing: border-box;
+    }
 
-.wrapper-style {
-    /*max-width: 90vw;*/
-    /*font: 1.2em Helvetica, arial, sans-serif;*/
-}
+    .wrapper-style {
+        /*max-width: 90vw;*/
+        /*font: 1.2em Helvetica, arial, sans-serif;*/
+    }
 
-.wrapper-style>* {
-    border: 0.5px solid #f08c00;
-    /*background-color: #ffec99;*/
-    border-radius: 5px;
-    padding: 1em;
-}
+    .wrapper-style>* {
+        border: 0.5px solid #f08c00;
+        /*background-color: #ffec99;*/
+        border-radius: 5px;
+        padding: 1em;
+    }
 
-nav {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-
-.content {
-    min-height: auto;
-}
-
-
-
-/*
-@media  and (min-device-width: 480px){
-
-}
-*/
-
-/*.hidden {
-  display: none;
-  visibility: hidden;
-} */
-
-/*@media (min-width: 900px) {
-
-
-    body,
-    html {
-        overflow: hidden;
+    nav {
+        list-style: none;
         margin: 0;
         padding: 0;
     }
 
 
+    .content {
+        min-height: auto;
+    }
 
-}*/
+
+    .card-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 0em 0em;
+        grid-template-areas:
+            ". . .";
+    }
+
+
+}
+
+@media print {
+
+    .non-printable {
+        visibility: hidden;
+    }
+
+    .printable,
+        {
+        visibility: visible;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+    }
+
+    .card-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 0em 0em;
+        grid-template-areas:
+            ". . ."
+            ". . ."
+            ""
+            ". . .";
+        visibility: visible;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+
+}
+
+
+
+
+
 
 .highlight {
     /*background: red;*/
@@ -96,14 +127,16 @@ nav {
     /*background-size: cover;*/
     background-size: 100% 100%;
     filter: brightness(115%);
-     -webkit-print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
 
 }
 
 .card-background {
-    background: url("../static/solid_background.png") no-repeat center;
+    background: url("../static/background.png") no-repeat center;
     background-size: 100% 100%;
-     -webkit-print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    background-color: white;
+
 }
 
 
@@ -125,22 +158,14 @@ path {
     stroke-width: 4em;
 }
 
-.inline{
-    display:inline;
+.inline {
+    display: inline;
 
 }
 
 
 
 
-.card-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 0em 0em;
-    grid-template-areas:
-        ". . . .";
-}
 
 
 .grid-container {
@@ -157,7 +182,7 @@ path {
         "description description description description"
         "description description description description"
         "description description description description"
-        "uniqueid flavour flavour cost";
+        "kind flavour flavour cost";
 }
 
 .title {
@@ -195,7 +220,7 @@ path {
 
 .flavour {
     grid-area: flavour;
-      font-style: italic;
+    font-style: italic;
 
 }
 
@@ -203,8 +228,8 @@ path {
     grid-area: cost;
 }
 
-.uniqueid {
-    grid-area: uniqueid;
+.kind {
+    grid-area: kind;
 }
 
 .description {
@@ -221,4 +246,44 @@ path {
 
 .size {
     grid-area: size;
+}
+
+.make-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+        "make-options make-card";
+}
+
+.make-options {
+    grid-area: make-options;
+}
+
+.make-card {
+    grid-area: make-card;
+}
+
+.options {
+    width: 300px;
+    height: 400px;
+    font-size: .1em;
+    /*border: 10px solid grey;*/
+    /*border-radius: 10px;*/
+    page-break-after: always;
+}
+
+
+.ss-value-delete{
+    position: absolute
+}
+
+.ss-main .ss-single-selected,
+.ss-main .ss-multi-selected {
+    height: 100%;
+}
+
+.ss-main {
+    padding: 0px;
 }

@@ -18,7 +18,7 @@ Customised weapons can be exported as JSON strings for later. Heres an example.
   "rarity": "Common",
   "flavour": "this is where the flavour goes",
   "cost": "4/-",
-  "uniqueid": "NO UNIQUE ID",
+  "uniqueid": "robert",
   "description": [
     "Undamaging"
   ],

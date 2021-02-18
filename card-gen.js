@@ -1,6 +1,5 @@
 exports.data = async function() {
-    var { rword } = require("rword");
-    var weapons = require("./weapons.json");
+    var items = require("./items.json");
     var qualities = require("./qualities.json");
 
     var defaults = {
@@ -8,9 +7,9 @@ exports.data = async function() {
             type: "basic",
             flavour: "this is where the flavour goes",
             size: "One handed",
-            uniqueid: "NO UNIQUE ID",
+            kind: "Weapon",
             image: "meat",
-            weight:0,
+            weight: 0,
         },
 
         descriptionCustomeRuleTitle: "Custom Rule"
@@ -48,7 +47,7 @@ exports.data = async function() {
     // // .filter(e => e[1]==true)
 
     // console.log(rword.generate(1, { contains: /.*er$/ }))
-    // add extra for variable (Rating) weapons
+    // add extra for variable (Rating) items
     Object.keys(qualities)
         .filter(qual => qual.includes("(Rating)"))
         .map(qual => {
@@ -57,8 +56,8 @@ exports.data = async function() {
                 i += 1
                 var nd = qualities[qual]
                 var nn = qual
-                nn = nn.replace("(Rating)", i)
-                nd = nd.replace("(Rating)", i)
+                nn = nn.replaceAll("(Rating)", i)
+                nd = nd.replaceAll("(Rating)", i)
                 qualities[nn] = nd
             })
             delete qualities[qual]
@@ -83,7 +82,7 @@ exports.data = async function() {
     <div class="attrib attrib-background rarity">{{rarity}}</div>
     <div class="attrib attrib-background flavour">{{flavour}}</div>
     <div class="attrib attrib-background cost">{{cost}}</div>
-    <div class="attrib attrib-background uniqueid">{{uniqueid}}</div>
+    <div class="attrib attrib-background kind">{{kind}}</div>
     <div class="attrib attrib-background description">{{{description}}}</div>
     <div class="attrib attrib-background type">{{type}}</div>
     <div class="attrib attrib-background size">{{size}}</div>
@@ -130,7 +129,6 @@ exports.data = async function() {
         return (str.length > n) ? str.substr(0, n - 1) : str;
     };
 
-    var names = rword.generate(weapons.length, { length: '3-5' })
 
 
     var mapFields = e => ({
@@ -144,14 +142,13 @@ exports.data = async function() {
         description: e["Qualities and Flaws"],
         type: e.Type,
         size: e.Size,
+        kind: e.Kind,
     })
 
     var compileData = {
-        damage: e => "Damage: " + e.damage,
         image: async e => await fetch(imageURL(e.image)).then(r => r.text()).then(r => r.replace(` fill="#fff"`, ``)),
         type: e => (e.type || defaults.fields.type).toLowerCase(),
         flavour: e => (e.flavour || defaults.fields.flavour),
-        uniqueid: (e, i) => e.uniqueid || i && names[i] || rword.generate(1, { length: '3-5' }),
         size: e => e.size || defaults.fields.size,
         description: e => qualLookup(e.description),
         weight: e => e.weight + `<i class="fas fa-weight-hanging"></i>`,
@@ -182,7 +179,7 @@ exports.data = async function() {
 
     return {
         generateCard,
-        weapons,
+        items,
         qualities,
         mapFields,
         cardTemplate,

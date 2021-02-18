@@ -17,6 +17,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dom-to-image": "^2.6.0",
+    "html2canvas": "^1.0.0-rc.7",
     "pre-commit": "^1.2.2",
     "rword": "^3.2.0",
     "sweetalert2": "^10.15.2"

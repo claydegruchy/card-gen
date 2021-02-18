@@ -1,24 +1,193 @@
 window.addEventListener("load", async e => {
-
-    var cardGen = await require("./card-gen.js").data()
     const Swal = require('sweetalert2')
 
+    Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        toast: true,
+        title: `Loading...`,
+        showConfirmButton: false,
+        timer: 500
+    })
+
+    const html2canvas = require("html2canvas")
+    var cardGen = await require("./card-gen.js").data()
+    const domtoimage = require('dom-to-image');
+    const { rword } = require("rword");
+
+    cardGen.presetList = await Promise.all(cardGen.items.map(async w => await cardGen.mapFields(w)));
+
     if (document.querySelector('#cardDump')) {
-        weapons = cardGen.weapons
-            // .filter(e => e.Availability.toLowerCase() != "exotic")
-            .map(async (e, i) => cardGen.generateCard(e, { i })
-                .then(card => document.querySelector('#cardDump').innerHTML += card))
+
+        var dump = document.querySelector('#cardDump')
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        var calculateDropdown = async () => {
+            var weaponOptionList = [...new Set(cardGen.presetList.map(i => i.type))]
+                .map(type => ({
+                    label: type,
+                    options: cardGen.presetList
+                        .filter(i => i.type == type)
+                        .map(w => ({ text: w.title, value: w.title })),
+                }))
+            var weaponFilterList = cardGen.presetList
+                .map(type => ({
+                    options: cardGen.presetList
+                        .filter(i => i.type == type)
+                        .map(w => ({ text: w.title, value: w.title })),
+                }))
+
+
+            // new SlimSelect({
+            //     select: "#presets",
+            //     searchPlaceholder: "Select a preset weapon template",
+            //     data: weaponOptionList,
+            //     selectByGroup: true,
+            //     closeOnSelect: true,
+            //     onChange: updateView
+            // });
+
+            var updateView = async function(selected) {
+                //this is weird and stupid but basically it makes sense that we dont try to spwan the same card template twice
+                selected = selected.map(s => s.value)
+                this.pending = this.pending || []
+                this.pending.push(...selected)
+                this.instance = this.instance || 0
+                this.instance += 1
+                var me = this.instance + 0
+                await sleep(200)
+                this.pending = [...new Set(this.pending)]
+                if (this.instance > me) { return; }
+                var selectedItems = cardGen.presetList.filter(i => this.pending.includes(i.title))
+                dump.innerHTML = ""
+                await Promise.all(selectedItems
+                    .map(async e => {
+                        var c = await cardGen.runCompile(e)
+                        dump.insertAdjacentHTML('beforeend', cardGen.cardTemplate(c));
+                    }))
+                this.pending = []
+
+
+                var nas = [...document.querySelectorAll(".grid-container.card.card-background")]
+                    .forEach(card => {
+                        card.onclick = async e => {
+                            console.log("clicks")
+                            var filename = `${card.querySelector(".title").innerHTML}-${rword.generate(1, { length: '4-5' })}`
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                toast: true,
+                                title: `Saving image ${filename}.jpg. This may take some time`,
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                            await domtoimage.toJpeg(card, { quality: 1 })
+                                .then(function(dataUrl) {
+                                    var link = document.createElement('a');
+                                    link.download = filename + '.jpeg';
+                                    link.href = dataUrl;
+                                    link.click();
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        toast: true,
+                                        title: `Image saved`,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                });
+                        }
+                    })
+
+            }
+
+            return new SlimSelect({
+                select: "#presets",
+                searchPlaceholder: "Select a preset weapon template",
+                data: weaponOptionList,
+                selectByGroup: true,
+                closeOnSelect: false,
+                onChange: updateView
+            });
+
+
+        }
+
+        var presetSelector = await calculateDropdown()
+        var randomElement = array => array[Math.floor(Math.random() * array.length)];
+
+        var randomSelection = [...new Set(Array.from(new Array(5)).map((x, i) => randomElement(cardGen.presetList).title))]
+        presetSelector.set(randomSelection)
+
+
+
+
+
+
+        //config importer
+        document.getElementById("import").onclick = e => {
+            Swal.fire({
+                    input: 'textarea',
+                    inputPlaceholder: 'Enter your weapon info...',
+                    title: 'Import data',
+                    text: 'Paste your weapon string below',
+                    inputAttributes: {
+                        'aria-label': 'Type your message here',
+                    },
+                    showCancelButton: true,
+                })
+                .then(o => JSON.parse(o.value))
+                .then(o => {
+                    if (!Array.isArray(o)) o = [o]
+                    return o
+                })
+                .then(async o => {
+                    cardGen.presetList.push(...o)
+                	console.log(o, cardGen.presetList)
+                    await calculateDropdown()	
+                })
+                .then(m => {
+                    if (m != 'success') {
+                        return ""
+                    } else {
+                        updateTemplate();
+                        return Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Data set loaded',
+                            timer: 1300
+                        })
+                    }
+                })
+                .catch(e => Swal.fire({
+                    icon: 'error',
+                    title: 'Import failed',
+                    text: 'Something went wrong! ' + e,
+                }))
+        };
+
+
+
+
+
+
+
+
     }
     if (document.querySelector('#cardMake')) {
 
         var iconList = require("./icon-list.json")
         //this disables the full icon list which is VERY large
-        iconList = [...new Set(cardGen.weapons
+        iconList = [...new Set(cardGen.items
             .map(w => w.Art))]
 
 
 
-        var defaultWeapon = await cardGen.mapFields(cardGen.weapons[24])
+        var defaultWeapon = await cardGen.mapFields(cardGen.items[24])
         console.log(defaultWeapon)
 
         var uiOptions = {
@@ -29,14 +198,17 @@ window.addEventListener("load", async e => {
                 return iconList
                     .map(icon => ({ text: icon, value: icon, selected: e.image.includes(icon) }))
             },
-            rarity: e => [...new Set(cardGen.weapons
+            rarity: e => [...new Set(cardGen.items
                     .map(w => w.Availability))]
                 .map(i => ({ text: i, value: i, selected: e.rarity.includes(i) })),
             description: e => Object.keys(cardGen.qualities)
                 .map(i => ({ text: i, value: i, selected: e.description && e.description.includes(i) })),
-            type: e => [...new Set(cardGen.weapons
+            type: e => [...new Set(cardGen.items
                     .map(w => w.Type))]
                 .map(i => ({ text: i, value: i, selected: e.type.includes(i) })),
+            kind: e => [...new Set(cardGen.items
+                    .map(w => w.Kind))]
+                .map(i => ({ text: i, value: i, selected: e.kind.includes(i) })),
         }
 
 
@@ -55,7 +227,7 @@ window.addEventListener("load", async e => {
 			    <select data-key="rarity" placeholder="rarity" value="{{rarity}}" class="option rarity"></select>
 			    <input data-key="flavour" placeholder="flavour" value="{{flavour}}" class="option flavour"></input>
 			    <input data-key="cost" placeholder="cost" value="{{cost}}" class="option cost"></input>
-			    <input data-key="uniqueid" placeholder="uniqueid" value="{{uniqueid}}" class="option uniqueid"></input>
+			    <select data-key="kind" placeholder="kind" value="{{kind}}" class="option kind"></select>
 			    <select multiple data-key="description" placeholder="description" value="{{{description}}}" class="option description"></select>
 			    <select data-key="type" placeholder="type" value="{{type}}" class="option type"></select>
 			    <input data-key="size" placeholder="size" value="{{size}}" class="option size"></input>
@@ -65,6 +237,12 @@ window.addEventListener("load", async e => {
 
 
 
+        var saveDiv = div => {
+            const html2canvas = require("html2canvas")
+            html2canvas(div).then(canvas => {
+                document.body.appendChild(canvas)
+            });
+        }
 
 
 
@@ -123,7 +301,6 @@ window.addEventListener("load", async e => {
                     [i.dataset.key]: v || selected || cardGen.defaults.fields[i.dataset.key]
                 }
             })
-            console.log(w)
             return await Object.assign({}, ...w)
         }
 
@@ -159,15 +336,21 @@ window.addEventListener("load", async e => {
 
         // make a list of presests to choos from 
 
-        var presetList = await Promise.all(cardGen.weapons.map(async w => await cardGen.mapFields(w)))
 
         new SlimSelect({
             select: "#presets",
             searchPlaceholder: "Select a preset weapon template",
-            data: presetList.map(w => ({ text: w.title, value: w.title })),
+            data: [...new Set(cardGen.presetList.map(i => i.kind))]
+                .map(kind => ({
+                    label: kind,
+                    options: cardGen.presetList
+                        .filter(i => i.kind == kind)
+                        .map(w => ({ text: w.title, value: w.title })),
+                })),
+
             closeOnSelect: true,
             onChange: async e => {
-                populateOptionFields(presetList.find(w => w.title == e.value))
+                populateOptionFields(cardGen.presetList.find(w => w.title == e.value))
                 refresh(await getInputInfo())
                 // populateOptionFields())
             }
@@ -223,4 +406,13 @@ window.addEventListener("load", async e => {
                 }))
         };
     }
+
+    await Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        toast: true,
+        title: `Loading complete!`,
+        showConfirmButton: false,
+        timer: 500
+    })
 })
