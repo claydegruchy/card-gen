@@ -190,7 +190,7 @@
         "Reach": "Personal",
         "Damage": "+SB+0",
         "Qualities and Flaws": null,
-        "Type": "FIST",
+        "Type": "BRAWLING",
         "Art": "fist",
         "Kind": "weapon"
     },
@@ -202,7 +202,7 @@
         "Reach": "Personal",
         "Damage": "+SB+2",
         "Qualities and Flaws": null,
-        "Type": "FIST",
+        "Type": "BRAWLING",
         "Art": "brass-knuckles",
         "Kind": "weapon"
     },
@@ -352,7 +352,7 @@
         "Damage": "+SB+5",
         "Qualities and Flaws": ["Damaging", "Defensive"],
         "Size": "two handed",
-        "Type": "",
+        "Type": "two-handed",
         "Art": "two-handed-sword",
         "Kind": "weapon"
     },
@@ -365,7 +365,7 @@
         "Damage": "+SB+6",
         "Qualities and Flaws": ["Hack", "Impact", "Tiring"],
         "Size": "two handed",
-        "Type": "",
+        "Type": "two-handed",
         "Art": "war-axe",
         "Kind": "weapon"
     },
@@ -378,7 +378,7 @@
         "Damage": "+SB+5",
         "Qualities and Flaws": ["Damaging", "Impale", "Tiring"],
         "Size": "two handed",
-        "Type": "",
+        "Type": "BASIC",
         "Art": "war-pick",
         "Kind": "weapon"
     },
@@ -391,7 +391,7 @@
         "Damage": "+SB+6",
         "Qualities and Flaws": ["Damaging", "Pummel", "Tiring"],
         "Size": "two handed",
-        "Type": "",
+        "Type": "two-handed",
         "Art": "warhammer",
         "Kind": "weapon"
     },
@@ -404,7 +404,7 @@
         "Damage": "+SB+5",
         "Qualities and Flaws": ["Damaging", "Hack"],
         "Size": "two handed",
-        "Type": "",
+        "Type": "two-handed",
         "Art": "shard-sword",
         "Kind": "weapon"
     },
@@ -647,7 +647,7 @@
         "Qualities and Flaws": null,
         "Size": "two handed",
         "Type": "SLING",
-        "Art": "wateriviner-stick",
+        "Art": "water-diviner-stick",
         "Kind": "weapon"
     },
     {
@@ -871,7 +871,7 @@
         "Kind": "Armour"
     },
     {
-        "Title": "Breastplate",
+        "Title": "Leather Breastplate",
         "Price": "18S",
         "Enc": 2,
         "Availability": "Scarce",

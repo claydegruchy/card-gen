@@ -11,7 +11,7 @@ exports.data = async function() {
             image: "meat",
             weight: 0,
         },
-
+        bulkGenDefault: 5,
         descriptionCustomeRuleTitle: "Custom Rule"
     }
 
@@ -121,8 +121,40 @@ exports.data = async function() {
 
     }
 
-    var formatWeight = (w) => formatWeight
 
+
+
+    function money(str, multi = 1) {
+        //pass in a moneny string to get a money object, and vice versa
+        if (typeof str === 'object' && str !== null) {
+
+
+
+            var x = ''
+            if (str.gold) { x += `${str.gold}G` }
+            if (str.silver) { x += `${str.silver}S` }
+            if (str.copper) { x += `${str.copper}d` }
+
+            return x
+        }
+        str = str.toLowerCase()
+
+        var gold = str.match(/[0-9]{1,2}g/gi)
+        var silver = str.match(/[0-9]{1,2}s/gi)
+        var copper = str.match(/[0-9]{1,2}d/gi)
+
+
+        gold = gold && gold[0] && gold[0].match(/[0-9]{1,2}/gi)[0]
+        silver = silver && silver[0] && silver[0].match(/[0-9]{1,2}/gi)[0]
+        copper = copper && copper[0] && copper[0].match(/[0-9]{1,2}/gi)[0]
+
+
+        return {
+            gold,
+            silver,
+            copper,
+        }
+    }
 
     function truncate(str, n) {
         if (!str) return str
@@ -144,6 +176,9 @@ exports.data = async function() {
         size: e.Size,
         kind: e.Kind,
     })
+
+
+
 
     var compileData = {
         image: async e => await fetch(imageURL(e.image)).then(r => r.text()).then(r => r.replace(` fill="#fff"`, ``)),

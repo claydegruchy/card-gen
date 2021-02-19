@@ -31,8 +31,15 @@
     "Incendiary": "Gives every affected target 1+(SL) Ablaze Conditions",
     "Loud": "-10 to Sealth (stacks with similar effects)",
     "Soft": "Can be worn without penalty under any other Armour",
+    "Unreliable": "Failed tests using this item receives –1 SL. Doubled if item is Armour.",
+    "Bulky": "Increase Encumbrance by +1 (even while worn). Fatigue penalties for armour are doubled.",
+    "Ugly": "Attract negative attention, and related Fellowship Tests might even suffer a –10 penalty.",
+    "Shoddy": "The item breaks when used in any failed Test rolling a double. Breaks after any successful save armour save.",
+    "Lightweight": "Cleverly crafted for ease of carrying. Reduce Encumbrance points by 1.",
+    "Practical": "Failed tests receive +1 SL. Penalties reduced by 10 level if armour.",
+    "Durable (Rating)": "Takes (Rating) Damage before it suffers negatives. Has extra rules (Ask GM)",
     "Blast (Rating)": "Everything in (Rating) yards of target takes (SL)+Weapon Damage, plus Conditions the this inflicts",
     "Shield (Rating)": "Counts as (Rating) Armour Points everywhere. If (Rating) > 2, you can also Oppose ranged attacks",
     "Repeater (Rating)": "Holds (Rating) shots and autoloads. Requires a normal reload when empty",
-    "Reload (Rating)": "Requires an Extended Ranged Test for the appropriate Weapon Group scoring (Rating) (SL) to reload"
+    "Reload (Rating)": "Extended Ranged Test for the appropriate Weapon Group scoring (Rating) (SL) to reload",
 }

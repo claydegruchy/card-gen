@@ -25,18 +25,36 @@ window.addEventListener("load", async e => {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
 
+        var filterOption = "rarity"
+        var filterSelection = []
         var calculateDropdown = async () => {
-            var weaponOptionList = [...new Set(cardGen.presetList.map(i => i.type))]
-                .map(type => ({
-                    label: type,
+
+            cardGen.presetList = cardGen.presetList
+                .filter(w => !filterSelection.includes(w.rarity.toLowerCase()))
+            // .filter(w => !["improvised", "fist"].includes(w.type.toLowerCase()))
+
+            // console.log(cardGen.presetList)
+            var groupingOption = "type"
+
+            // var filterOptions = [...new Set(cardGen.presetList.map(i => i[filterOption]))]
+
+            var weaponOptionList = [...new Set(cardGen.presetList.map(i => i[groupingOption].toUpperCase()))]
+                .map(s => ({
+                    label: s,
                     options: cardGen.presetList
-                        .filter(i => i.type == type)
-                        .map(w => ({ text: w.title, value: w.title })),
+                        .filter(i => i[groupingOption].toUpperCase() == s)
+                        .map(w => ({
+                            text: w.title,
+                            innerHTML: `<div class="inline">${w.title}</div> - <small class="inline">${w.rarity} ${w.kind} ${w.flavour||""}</div>`,
+                            value: w.title
+                        })),
                 }))
+
+
             var weaponFilterList = cardGen.presetList
                 .map(type => ({
                     options: cardGen.presetList
-                        .filter(i => i.type == type)
+                        .filter(i => i[groupingOption] == type)
                         .map(w => ({ text: w.title, value: w.title })),
                 }))
 
@@ -105,7 +123,7 @@ window.addEventListener("load", async e => {
 
             }
 
-            return new SlimSelect({
+            var s = new SlimSelect({
                 select: "#presets",
                 searchPlaceholder: "Select a preset weapon template",
                 data: weaponOptionList,
@@ -114,13 +132,29 @@ window.addEventListener("load", async e => {
                 onChange: updateView
             });
 
+            // new SlimSelect({
+            //     select: "#filter",
+            //     searchPlaceholder: "Select the " + filterOption,
+            //     data: filterOptions.map(e => ({ text: e, value: e, select: filterSelection.includes(e) })),
+            //     selectByGroup: true,
+            //     closeOnSelect: false,
+            //     onChange: e => {
+            //         console.log(e)
+            //         filterSelection = [...new Set(e)]
+            //         calculateDropdown()
+            //     }
+            // });
+
+            return s
+
 
         }
 
         var presetSelector = await calculateDropdown()
         var randomElement = array => array[Math.floor(Math.random() * array.length)];
 
-        var randomSelection = [...new Set(Array.from(new Array(5)).map((x, i) => randomElement(cardGen.presetList).title))]
+        var randomSelection = [...new Set(Array.from(new Array(cardGen.defaults.bulkGenDefault))
+            .map((x, i) => randomElement(cardGen.presetList).title))]
         presetSelector.set(randomSelection)
 
 
@@ -146,9 +180,10 @@ window.addEventListener("load", async e => {
                     return o
                 })
                 .then(async o => {
+                    var simplePreset = cardGen.presetList.map(i => JSON.stringify(i))
+                    o = o.filter(i => !simplePreset.includes(JSON.stringify(i)))
                     cardGen.presetList.push(...o)
-                	console.log(o, cardGen.presetList)
-                    await calculateDropdown()	
+                    await calculateDropdown()
                 })
                 .then(m => {
                     if (m != 'success') {
@@ -170,8 +205,28 @@ window.addEventListener("load", async e => {
                 }))
         };
 
+        // config exporter
+        document.getElementById("export").onclick = async e => {
+            var inp = presetSelector.selected()
+            inp = cardGen.presetList.filter(i => inp.includes(i.title))
 
+            Swal.fire({
+                    input: 'textarea',
+                    title: 'Export data',
+                    text: 'Copy your data string below',
+                    inputValue: JSON.stringify(inp, null, 2),
+                    inputAttributes: {
+                        'aria-label': 'Type your message here',
+                    },
+                    showCancelButton: true,
+                })
+                .disableInput()
+        };
 
+        // config exporter
+        document.getElementById("clear").onclick = async e => {
+            presetSelector.set([])
+        };
 
 
 
