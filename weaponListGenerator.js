@@ -450,10 +450,11 @@ var ranged = [{
 ]
 
 var randomElement = array => array[Math.floor(Math.random() * array.length)];
-var issues = ["Loud",
+var issues = [
+    // "Loud",
     "Unreliable",
-    "Bulky",
-    "Ugly",
+    // "Bulky",
+    // "Ugly",
     "Shoddy",
 ]
 
@@ -464,14 +465,26 @@ var w = [weapons, armour, ranged].forEach(list => {
         if (["Ammunition", "FIST"].includes(item.type)) return item
         item.flavour = "From Jahrdrung Market"
         item.title = randomElement(["Old ", "Worn "]) + item.title
-        item.description = [...item.description || "", randomElement([hiddenIssue, "", ""])]
+        // item.description = [...item.description || "", randomElement([hiddenIssue, "", ""])]
+        // item.description = [...new Set(item.description)]
+        // item.description = item.description.filter(e => e.length > 0)
+        // if (item.description.includes(hiddenIssue)) {
+        //     item.cost = calculate(item.cost, .5)
+        // }
+
+        item.description = [...item.description || "", randomElement([randomElement(issues), "", ""])]
         item.description = [...new Set(item.description)]
-        if (item.description.includes(hiddenIssue)) {
-        	item.cost = calculate(item.cost, .5)
+        item.description = item.description.filter(e => e.length > 0)
+        item.description = item.description
+        if (item.description.filter(e => issues.includes(e)) > 0) {
+            item.cost = calculate(item.cost, .5)
         }
-        
+
         return item
     })
 })
+
+
+
 
 console.log(JSON.stringify([...weapons, ...armour, ...ranged]))
