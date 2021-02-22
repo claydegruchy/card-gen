@@ -226,6 +226,12 @@ exports.data = async function() {
     return await temp
   }
 
+
+
+
+
+
+
   return {
     generateCard,
     items,

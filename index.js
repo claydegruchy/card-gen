@@ -17,6 +17,46 @@ window.addEventListener("load", async e => {
     rword
   } = require("rword");
 
+
+  var stateItems = [
+    "items",
+    "qualities",
+    "defaults",
+  ]
+
+  var state = {
+    save: function() {
+      console.log("saving state");
+      return stateItems.map(k => localStorage.setItem(k, JSON.stringify(cardGen[items])))
+
+    },
+    load: function() {
+      console.log("loading state");
+      stateItems.map(k => {
+        console.log("loading", k);
+        var stateItem = localStorage.getItem(k);
+        if (stateItem) {
+          cardGen[k] = stateItem
+        }
+      })
+    },
+    reset: function() {
+      if (!this.resetState) {
+        this.resetState = {}
+        console.log("setting base state");
+        return stateItems.map(k => this.resetState[k] = cardGen[k])
+      }
+      console.log("reseting state to base");
+      return stateItems.map(k => cardGen[k] = this.resetState[k])
+    }
+  }
+
+  state.reset()
+
+
+  state.load()
+
+
   // cardGen.items = await Promise.all(cardGen.items.map(async w => await cardGen.mapFields(w)));
 
 
@@ -33,8 +73,8 @@ window.addEventListener("load", async e => {
     var filterSelection = []
     var calculateDropdown = async () => {
 
-      cardGen.items = cardGen.items
-        .filter(w => !filterSelection.includes(w.rarity.toLowerCase()))
+      // cardGen.items = cardGen.items
+        // .filter(w => !filterSelection.includes(w.rarity.toLowerCase()))
       // .filter(w => !["improvised", "fist"].includes(w.type.toLowerCase()))
 
       // console.log(cardGen.items)
@@ -194,6 +234,7 @@ window.addEventListener("load", async e => {
           var simplePreset = cardGen.items.map(i => JSON.stringify(i))
           o = o.filter(i => !simplePreset.includes(JSON.stringify(i)))
           cardGen.items.push(...o)
+
           await calculateDropdown()
         })
         .then(m => {
@@ -201,6 +242,8 @@ window.addEventListener("load", async e => {
             return ""
           } else {
             updateTemplate();
+            console.log("here??")
+            state.save()
             return Swal.fire({
               icon: 'success',
               title: 'Success',
@@ -238,11 +281,6 @@ window.addEventListener("load", async e => {
     document.getElementById("clear").onclick = async e => {
       presetSelector.set([])
     };
-
-
-
-
-
   }
   if (document.querySelector('#cardMake')) {
 
@@ -297,7 +335,7 @@ window.addEventListener("load", async e => {
             value: i,
             selected: e.description && e.description.includes(i)
           }))
-console.log("qualities",[...qualities, ...specialRules]);
+        // console.log("qualities",[...qualities, ...specialRules]);
 
         return [...qualities, ...specialRules]
 
