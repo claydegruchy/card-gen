@@ -1,74 +1,74 @@
 exports.data = async function() {
-    var items = require("./items.json");
-    var qualities = require("./qualities.json");
+  var items = require("./items.json");
+  var qualities = require("./qualities.json");
 
-    var defaults = {
-        fields: {
-            type: "basic",
-            flavour: "this is where the flavour goes",
-            size: "One handed",
-            kind: "Weapon",
-            image: "meat",
-            weight: 0,
-        },
-        bulkGenDefault: 5,
-        descriptionCustomeRuleTitle: "Custom Rule"
-    }
-
-
-
-    async function objectPromise(object) {
-        if (!object) return false
-        return Promise.all(Object.values(object))
-            .then(data => {
-                return Object.keys(object).map(function(v, i) {
-                    return [v, data[i]];
-                });
-            })
-            .then(data => Object.assign(...data.map(([key, val]) => ({
-                [key]: val
-            }))))
-
-    }
+  var defaults = {
+    fields: {
+      type: "basic",
+      flavour: "this is where the flavour goes",
+      size: "One handed",
+      kind: "Weapon",
+      image: "meat",
+      weight: 0,
+    },
+    bulkGenDefault: 5,
+    descriptionCustomeRuleTitle: "Custom Rule"
+  }
 
 
+
+  async function objectPromise(object) {
+    if (!object) return false
+    return Promise.all(Object.values(object))
+      .then(data => {
+        return Object.keys(object).map(function(v, i) {
+          return [v, data[i]];
+        });
+      })
+      .then(data => Object.assign(...data.map(([key, val]) => ({
+        [key]: val
+      }))))
+
+  }
 
 
 
 
-    // var wewe = Object.entries(qualities)
-    //     .sort(function(a, b) {
-    //         if (a[1].length < b[1].length) { return -1; }
-    //         if (a[1].length > b[1].length) { return 1; }
-    //         return 0;
-    //     })
-    //     .filter(e => e[1].length > 100)
-    //     .map(e => e[0])
-    // // .filter(e => e[1]==true)
-
-    // console.log(rword.generate(1, { contains: /.*er$/ }))
-    // add extra for variable (Rating) items
-    Object.keys(qualities)
-        .filter(qual => qual.includes("(Rating)"))
-        .map(qual => {
-            var totalRatings = 6;
-            Array.from(new Array(totalRatings)).forEach((sd, i) => {
-                i += 1
-                var nd = qualities[qual]
-                var nn = qual
-                nn = nn.replaceAll("(Rating)", i)
-                nd = nd.replaceAll("(Rating)", i)
-                qualities[nn] = nd
-            })
-            delete qualities[qual]
-        })
-
-    Array.prototype.randomElement = function() {
-        return this[Math.floor(random() * this.length)];
-    };
 
 
-    var cardTemplate = Handlebars.compile(`
+  // var wewe = Object.entries(qualities)
+  //     .sort(function(a, b) {
+  //         if (a[1].length < b[1].length) { return -1; }
+  //         if (a[1].length > b[1].length) { return 1; }
+  //         return 0;
+  //     })
+  //     .filter(e => e[1].length > 100)
+  //     .map(e => e[0])
+  // // .filter(e => e[1]==true)
+
+  // console.log(rword.generate(1, { contains: /.*er$/ }))
+  // add extra for variable (Rating) items
+  Object.keys(qualities)
+    .filter(qual => qual.includes("(Rating)"))
+    .map(qual => {
+      var totalRatings = 6;
+      Array.from(new Array(totalRatings)).forEach((sd, i) => {
+        i += 1
+        var nd = qualities[qual]
+        var nn = qual
+        nn = nn.replaceAll("(Rating)", i)
+        nd = nd.replaceAll("(Rating)", i)
+        qualities[nn] = nd
+      })
+      delete qualities[qual]
+    })
+
+  Array.prototype.randomElement = function() {
+    return this[Math.floor(random() * this.length)];
+  };
+
+
+  var cardTemplate = Handlebars.compile(`
 <div class="grid-container card card-background">
     <div class="attrib attrib-background title">{{title}}</div>
     <div class="attrib attrib-background damage">{{damage}}</div>
@@ -89,138 +89,152 @@ exports.data = async function() {
 </div>
                                 `)
 
-    var qualityTemplate = Handlebars.compile(`
+  var qualityTemplate = Handlebars.compile(`
     <div>
         {{#each this}}
             <div><b>{{this.name}}:</b> <div class="inline">{{this.desc}}</div></div>
         {{/each}}
     </div>
-        
+
         `)
 
 
 
-    var imageURL = name => `./static/icons/${name}.svg`
-    if (location.hostname === "localhost") var imageURL = name => `../static/icons/${name}.svg`
-
-
-
-    var qualLookup = (quals) => {
-        if (!quals) return ""
-        if (!Array.isArray(quals)) quals = quals.split(",")
-
-        var nq = quals
-            .map(e => {
-                return {
-                    desc: (qualities[e] ? qualities[e] : e),
-                    name: (qualities[e] ? e : defaults.descriptionCustomeRuleTitle),
-                }
-            })
-        // console.log(nq)
-        return qualityTemplate(nq)
-
-    }
+  var imageURL = name => `./static/icons/${name}.svg`
+  if (location.hostname === "localhost") var imageURL = name => `../static/icons/${name}.svg`
 
 
 
 
-    function money(str, multi = 1) {
-        //pass in a moneny string to get a money object, and vice versa
-        if (typeof str === 'object' && str !== null) {
 
+  var qualLookup = (quals) => {
+    console.log("quals", quals);
+    if (!quals) return ""
+    if (!Array.isArray(quals)) quals = quals.split(",")
 
-
-            var x = ''
-            if (str.gold) { x += `${str.gold}G` }
-            if (str.silver) { x += `${str.silver}S` }
-            if (str.copper) { x += `${str.copper}d` }
-
-            return x
-        }
-        str = str.toLowerCase()
-
-        var gold = str.match(/[0-9]{1,2}g/gi)
-        var silver = str.match(/[0-9]{1,2}s/gi)
-        var copper = str.match(/[0-9]{1,2}d/gi)
-
-
-        gold = gold && gold[0] && gold[0].match(/[0-9]{1,2}/gi)[0]
-        silver = silver && silver[0] && silver[0].match(/[0-9]{1,2}/gi)[0]
-        copper = copper && copper[0] && copper[0].match(/[0-9]{1,2}/gi)[0]
-
-
+    var nq = quals
+      .map(e => {
+        console.log("something happen", e);
         return {
-            gold,
-            silver,
-            copper,
+          desc: (qualities[e] ? qualities[e] : e),
+          name: (qualities[e] ? e : defaults.descriptionCustomeRuleTitle),
         }
+      })
+    // console.log(nq)
+    return qualityTemplate(nq)
+
+  }
+
+
+
+
+  function money(str, multi = 1) {
+    //pass in a moneny string to get a money object, and vice versa
+    if (typeof str === 'object' && str !== null) {
+
+
+
+      var x = ''
+      if (str.gold) {
+        x += `${str.gold}G`
+      }
+      if (str.silver) {
+        x += `${str.silver}S`
+      }
+      if (str.copper) {
+        x += `${str.copper}d`
+      }
+
+      return x
     }
+    str = str.toLowerCase()
 
-    function truncate(str, n) {
-        if (!str) return str
-        return (str.length > n) ? str.substr(0, n - 1) : str;
-    };
-
-
-
-    var mapFields = e => ({
-        title: e.Title,
-        damage: e.Damage,
-        reach: e.Reach,
-        weight: e.Enc,
-        image: e.Art,
-        rarity: e.Availability,
-        cost: e.Price,
-        description: e["Qualities and Flaws"],
-        type: e.Type,
-        size: e.Size,
-        kind: e.Kind,
-    })
+    var gold = str.match(/[0-9]{1,2}g/gi)
+    var silver = str.match(/[0-9]{1,2}s/gi)
+    var copper = str.match(/[0-9]{1,2}d/gi)
 
 
+    gold = gold && gold[0] && gold[0].match(/[0-9]{1,2}/gi)[0]
+    silver = silver && silver[0] && silver[0].match(/[0-9]{1,2}/gi)[0]
+    copper = copper && copper[0] && copper[0].match(/[0-9]{1,2}/gi)[0]
 
-
-    var compileData = {
-        image: async e => await fetch(imageURL(e.image)).then(r => r.text()).then(r => r.replace(` fill="#fff"`, ``)),
-        type: e => (e.type || defaults.fields.type).toLowerCase(),
-        flavour: e => (e.flavour || defaults.fields.flavour),
-        size: e => e.size || defaults.fields.size,
-        description: e => qualLookup(e.description),
-        weight: e => e.weight + `<i class="fas fa-weight-hanging"></i>`,
-
-    }
-
-    var runCompile = async (e, i = 1) => {
-        var o = { ...e }
-        Object.keys(compileData).forEach(df => {
-            o[df] = compileData[df](e)
-        })
-        return objectPromise(o)
-    }
-
-
-
-    var generateCard = async (data, attrib = { i: false }) => {
-
-        //remap the fields
-        var remap = mapFields(data)
-        //run processing on the new fields
-        var card = await runCompile(remap, attrib)
-        //use the processed data to make the card template, why did i make this so overcommplicated?
-        var temp = cardTemplate(card)
-
-        return await temp
-    }
 
     return {
-        generateCard,
-        items,
-        qualities,
-        mapFields,
-        cardTemplate,
-        runCompile,
-        defaults,
+      gold,
+      silver,
+      copper,
     }
+  }
+
+  function truncate(str, n) {
+    if (!str) return str
+    return (str.length > n) ? str.substr(0, n - 1) : str;
+  };
+
+
+
+  var mapFields = e => ({
+    title: e.Title,
+    damage: e.Damage,
+    reach: e.Reach,
+    weight: e.Enc,
+    image: e.Art,
+    rarity: e.Availability,
+    cost: e.Price,
+    description: e["Qualities and Flaws"],
+    type: e.Type,
+    size: e.Size,
+    kind: e.Kind,
+  })
+
+
+
+
+  var compileData = {
+    image: async e => await fetch(imageURL(e.image)).then(r => r.text()).then(r => r.replace(` fill="#fff"`, ``)),
+    type: e => (e.type || defaults.fields.type).toLowerCase(),
+    flavour: e => (e.flavour || defaults.fields.flavour),
+    size: e => e.size || defaults.fields.size,
+    description: e => qualLookup(e.description),
+    weight: e => e.weight + `<i class="fas fa-weight-hanging"></i>`,
+
+  }
+
+  var runCompile = async (e, i = 1) => {
+    var o = {
+      ...e
+    }
+    Object.keys(compileData).forEach(df => {
+      o[df] = compileData[df](e)
+    })
+    return objectPromise(o)
+  }
+
+
+
+  var generateCard = async (data, attrib = {
+    i: false
+  }) => {
+    console.log("data", data);
+    //remap the fields
+    // var remap = mapFields(data)
+    //run processing on the new fields
+    var card = await runCompile(data, attrib)
+    //use the processed data to make the card template, why did i make this so overcommplicated?
+    var temp = cardTemplate(card)
+
+    return await temp
+  }
+
+  return {
+    generateCard,
+    items,
+    qualities,
+    mapFields,
+    cardTemplate,
+    runCompile,
+    defaults,
+  }
 
 
 }
