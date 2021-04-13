@@ -1,3 +1,7 @@
+
+body{
+  text-size:10px;
+}
 @media screen {
     .list {
         display: list-item;
@@ -104,7 +108,12 @@
 .card {
     width: 300px;
     height: 400px;
-    font-size: .1em;
+    /* font-size: 0.1em; */
+    /* font-size: 0.1em; */
+    font-size: 8.5px;
+    /* font-size: calc((75vw - 4.5rem) / 7) */
+
+
     border: 10px solid grey;
     border-radius: 10px;
     page-break-after: always;
@@ -169,7 +178,7 @@ path {
 
 
 .grid-container {
-    padding: 5em;
+    padding: 5px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -188,7 +197,7 @@ path {
 .title {
     grid-area: title;
     font-weight: bold;
-    font-size: 7em;
+    font-size: 2em;
 
 }
 
@@ -212,6 +221,8 @@ path {
 
 .image {
     grid-area: image;
+    font-size: 0.1em;
+
 }
 
 .rarity {
@@ -235,7 +246,9 @@ path {
 .description {
     grid-area: description;
     text-align: justify;
-    padding: 10em;
+    /* font-size: 1em; */
+
+    padding: 15px;
     text-transform: initial;
 
 }
