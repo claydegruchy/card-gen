@@ -56,6 +56,40 @@ window.addEventListener("load", async e => {
 
   state.load()
 
+  var updateImageSaver = e => [...document.querySelectorAll(".grid-container.card.card-background")]
+    .forEach(card => {
+      card.onclick = async e => {
+        console.log("clicks")
+        var filename = `${card.querySelector(".title").innerHTML}-${rword.generate(1, { length: '4-5' })}`
+
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          toast: true,
+          title: `Saving image ${filename}.jpg. This may take some time`,
+          showConfirmButton: false,
+          timer: 1000
+        })
+        await domtoimage.toJpeg(card, {
+            quality: 1
+          })
+          .then(function(dataUrl) {
+            var link = document.createElement('a');
+            link.download = filename + '.jpeg';
+            link.href = dataUrl;
+            link.click();
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              toast: true,
+              title: `Image saved`,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+      }
+    })
+
 
   // cardGen.items = await Promise.all(cardGen.items.map(async w => await cardGen.mapFields(w)));
 
@@ -74,7 +108,7 @@ window.addEventListener("load", async e => {
     var calculateDropdown = async () => {
 
       // cardGen.items = cardGen.items
-        // .filter(w => !filterSelection.includes(w.rarity.toLowerCase()))
+      // .filter(w => !filterSelection.includes(w.rarity.toLowerCase()))
       // .filter(w => !["improvised", "fist"].includes(w.type.toLowerCase()))
 
       // console.log(cardGen.items)
@@ -138,39 +172,7 @@ window.addEventListener("load", async e => {
         this.pending = []
 
 
-        var nas = [...document.querySelectorAll(".grid-container.card.card-background")]
-          .forEach(card => {
-            card.onclick = async e => {
-              console.log("clicks")
-              var filename = `${card.querySelector(".title").innerHTML}-${rword.generate(1, { length: '4-5' })}`
-
-              Swal.fire({
-                position: 'top-end',
-                icon: 'warning',
-                toast: true,
-                title: `Saving image ${filename}.jpg. This may take some time`,
-                showConfirmButton: false,
-                timer: 1000
-              })
-              await domtoimage.toJpeg(card, {
-                  quality: 1
-                })
-                .then(function(dataUrl) {
-                  var link = document.createElement('a');
-                  link.download = filename + '.jpeg';
-                  link.href = dataUrl;
-                  link.click();
-                  Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    toast: true,
-                    title: `Image saved`,
-                    showConfirmButton: false,
-                    timer: 1500
-                  })
-                });
-            }
-          })
+        updateImageSaver()
 
       }
 
@@ -382,13 +384,6 @@ window.addEventListener("load", async e => {
 
 
 
-    var saveDiv = div => {
-      const html2canvas = require("html2canvas")
-      html2canvas(div).then(canvas => {
-        document.body.appendChild(canvas)
-      });
-    }
-
 
 
 
@@ -454,9 +449,10 @@ window.addEventListener("load", async e => {
 
     //make the refresh function
     var refresh = (weapon) => cardGen.runCompile(weapon)
-      .then(card =>
+      .then(card => {
         document.querySelector('#cardMake').innerHTML = cardGen.cardTemplate(card)
-      )
+        updateImageSaver()
+      })
 
     //connect options to listeners
     allInputTypes.map(i => {
