@@ -325,7 +325,8 @@ window.addEventListener("load", async e => {
       description: e => {
         // need to do some whacky shit here as the quality list wont contain custom special rules
         var specialRules = e.description
-          .filter(q => !cardGen.qualities[q])
+        if (!specialRules) specialRules = []
+        specialRules = specialRules.filter(q => !cardGen.qualities[q])
           .map(q => makeSpecialRule(q))
           .map(q => ({
             ...q,
@@ -470,7 +471,7 @@ window.addEventListener("load", async e => {
 
     //update the card template with that info
     refresh(currentInput)
-
+    updateImageSaver()
 
     // make a list of presests to choos from
 
