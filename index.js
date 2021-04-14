@@ -55,6 +55,20 @@ window.addEventListener("load", async e => {
 
 
   state.load()
+  document.querySelector("#font").onclick = e => {
+    var cards = [...document.querySelectorAll(".card")]
+    if (cards.find(c => c.classList.contains('theme-font'))) {
+      cards.forEach(c => c.classList.remove("theme-font"))
+      e.target.classList.remove("highlight")
+    } else {
+      cards.forEach(c => c.classList.add("theme-font"))
+      e.target.classList.add("highlight")
+
+    }
+  }
+
+
+
 
   var updateImageSaver = e => [...document.querySelectorAll(".grid-container.card.card-background")]
     .forEach(card => {
