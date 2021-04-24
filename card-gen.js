@@ -1,6 +1,7 @@
 exports.data = async function() {
   var items = require("./items.json");
   var qualities = require("./qualities.json");
+  var qualitiesMap = require("./qualityTypeMap.json");
 
   var defaults = {
     fields: {
@@ -126,9 +127,40 @@ exports.data = async function() {
   }
 
 
+  function moneyCalculate(str, factor = 1) {
+    console.log("moneyCalculate", str, factor)
+    var moneyObj = money(str)
+    var d = 0
+    d += moneyObj.gold * 240
+    d += moneyObj.silver * 20
+    d += moneyObj.copper / 1
+
+    d = Math.round(d * factor)
+
+    var gold = Math.floor(d / 240);
+    var r = d % 240;
+    var silver = Math.floor(r / 20);
+    r = d % 20;
+    var copper = Math.floor(r / 1);
+    // var goldQuotient = Math.floor(silverQuotient / 20);
+    // var silverRemainder = silverQuotient % 20;
+
+    return money({
+      gold,
+      silver,
+      copper,
+    })
+
+  }
 
 
   function money(str, multi = 1) {
+
+
+
+
+
+
     //pass in a moneny string to get a money object, and vice versa
     if (typeof str === 'object' && str !== null) {
 
@@ -157,6 +189,7 @@ exports.data = async function() {
     gold = gold && gold[0] && gold[0].match(/[0-9]{1,2}/gi)[0]
     silver = silver && silver[0] && silver[0].match(/[0-9]{1,2}/gi)[0]
     copper = copper && copper[0] && copper[0].match(/[0-9]{1,2}/gi)[0]
+
 
 
     return {
@@ -240,6 +273,9 @@ exports.data = async function() {
     cardTemplate,
     runCompile,
     defaults,
+    qualitiesMap,
+    money,
+    moneyCalculate
   }
 
 

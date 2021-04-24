@@ -1,6 +1,6 @@
 window.addEventListener("load", async e => {
   const Swal = require('sweetalert2')
-
+  var randomElement = array => array[Math.floor(Math.random() * array.length)];
   Swal.fire({
     position: 'top-end',
     icon: 'warning',
@@ -66,6 +66,8 @@ window.addEventListener("load", async e => {
 
     }
   }
+
+
 
 
 
@@ -218,7 +220,7 @@ window.addEventListener("load", async e => {
     }
 
     var presetSelector = await calculateDropdown()
-    var randomElement = array => array[Math.floor(Math.random() * array.length)];
+
 
     var randomSelection = [...new Set(Array.from(new Array(cardGen.defaults.bulkGenDefault))
       .map((x, i) => randomElement(cardGen.items).title))]
@@ -298,6 +300,63 @@ window.addEventListener("load", async e => {
       presetSelector.set([])
     };
   }
+
+
+  document.querySelector("#random").onclick = async e => {
+
+    var negativeQualities = Object.entries(cardGen.qualitiesMap).filter((v) => v[1].includes("negative"))
+    var positiveQualities = Object.entries(cardGen.qualitiesMap).filter((v) => v[1].includes("positive"))
+
+    var temp = randomElement(cardGen.items)
+    if (!temp.description) temp.description = []
+    var cost = temp.cost
+
+    var chances = {
+      negative: 1,
+      positive: 1,
+      skip: 10,
+
+    }
+    var odds = []
+    for (var [k, v] of Object.entries(chances)) {
+      Array.from(new Array(v)).forEach(() => odds.push(k))
+    }
+
+    for (var variable of Array.from(new Array(3))) {
+      var choice = randomElement(odds)
+      if (choice == "negative") {
+        temp.description.push(randomElement(negativeQualities)[0])
+        var cost = cardGen.moneyCalculate(cost, .5)
+        temp.flavour = "Good discount"
+      }
+
+      if (choice == "positive") {
+        temp.description.push(randomElement(positiveQualities)[0])
+        var cost = cardGen.moneyCalculate(cost, 2)
+        temp.flavour = "Quality item"
+      }
+    }
+
+
+    // choose a number of random qualities, pos and neg
+    // count the number of each
+    // double or half the cost for each
+
+
+    // console.log(pos, neg, newCost);
+    // console.log(temp.description);
+
+    temp.cost = cost
+
+console.log(temp);
+
+    await populateOptionFields(temp)
+    await refresh(await getInputInfo())
+
+
+  }
+
+
   if (document.querySelector('#cardMake')) {
 
     var iconList = require("./icon-list.json")
