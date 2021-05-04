@@ -76,7 +76,9 @@ window.addEventListener("load", async e => {
     .forEach(card => {
       card.onclick = async e => {
         console.log("clicks")
-        var filename = `${card.querySelector(".title").innerHTML}-${rword.generate(1, { length: '4-5' })}`
+        var t = card.querySelector(".title") && card.querySelector(".title").innerHTML || "nothing"
+
+        var filename = `${t}-${rword.generate(1, { length: '4-5' })}`
 
         Swal.fire({
           position: 'top-end',
@@ -105,7 +107,7 @@ window.addEventListener("load", async e => {
           });
       }
     })
-
+  updateImageSaver()
 
   // cardGen.items = await Promise.all(cardGen.items.map(async w => await cardGen.mapFields(w)));
 
@@ -348,7 +350,7 @@ window.addEventListener("load", async e => {
 
     temp.cost = cost
 
-console.log(temp);
+    console.log(temp);
 
     await populateOptionFields(temp)
     await refresh(await getInputInfo())
@@ -620,6 +622,7 @@ console.log(temp);
           text: 'Something went wrong! ' + e,
         }))
     };
+    updateImageSaver()
   }
 
   await Swal.fire({

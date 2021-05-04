@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Weapon card</title>
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.23.0/slimselect.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.23.0/slimselect.min.css" rel="stylesheet">
+
+
+  <style media="screen">
+    .grid-container {
+      display: grid;
+      grid-template-columns: 0.1fr 1fr 0.1fr;
+      grid-template-rows: 0.1fr .5fr 1fr 1fr 1fr 0.1fr;
+      gap: 0px 0px;
+      grid-template-areas:
+        ". . ."
+        ". description1 ."
+        ". image ."
+        ". image ."
+        ". description2 ."
+        ". . .";
+    }
+
+    .image {
+      border: 3px solid grey;
+      grid-area: image;
+      max-width: 100%;
+      max-height: 100%;
+      filter: sepia(0.70);
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+
+    }
+
+    .description1 {
+
+      text-align: center;
+      grid-area: description1;
+    }
+
+    .description2 {
+      text-align: center;
+      grid-area: description2;
+    }
+
+
+
+
+    .card-background {
+      /* transform: rotate(20deg); */
+      background: ""
+    }
+  </style>
+
+</head>
+
+
+<body>
+  <div class="non-printable wrapper-style">
+    <div class="main-head">
+      <center>
+        <h4>
+          Card maker
+        </h4>
+      </center>
+
+      <div class=" container main-footer">
+        <select id="presets"></select>
+        <button class="pure-button" id="font">Toggle themed font</button>
+        <button class="pure-button" id="scramble">Scramble</button>
+
+      </div>
+
+    </div>
+    <div>
+      Want to generate large numbers of cards? Use this <a href="./">bulk generation tool</a>.
+    </div>
+    <!-- mandred -->
+    <div class="make-grid-container wrapper-style">
+      <div class="make-card printable">
+        <div class="grid-container card theme-font card-background">
+          <div class="attrib attrib-background description1">
+            <div>
+              <h3>REWARD</h5>
+                <h6>5 Shillings</h6>
+            </div>
+          </div>
+          <img class="attrib attrib-background image" src="./static/wanted/mandred.png" alt="">
+          <div class="attrib attrib-background description2">
+            <div>
+              <p></p>
+              <h6>Wanted For Skulduggery and Questioning</h6>
+              <h6>Last spotted: <b>Middlewig</b> </h6>
+              <h6>Paid only if ALIVE</h6>
+              Deliver to His most Prestigious and Honorable Judge Earhart Kliner
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- karl peasent -->
+    <div class="make-grid-container wrapper-style">
+      <div class="make-card printable">
+        <div class="grid-container card theme-font card-background">
+          <div class="attrib attrib-background description1">
+            <div>
+              <h3>REWARD</h5>
+                <h6>20 Shillings</h6>
+            </div>
+          </div>
+          <img class="attrib attrib-background image" src="./static/wanted/karl-peasent.png" alt="">
+          <div class="attrib attrib-background description2">
+            <div>
+              <p></p>
+              <h6>Wanted For Impersonation, Trespasing and Theft</h6>
+              <h6>Last spotted: <b>Basdahl</b> </h6>
+              <h6>Paid only if ALIVE</h6>
+              Deliver to His most Prestigious and Honorable Judge Earhart Kliner
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- karl girl -->
+    <div class="make-grid-container wrapper-style">
+      <div class="make-card printable">
+        <div class="grid-container card theme-font card-background">
+          <div class="attrib attrib-background description1">
+            <div>
+              <h3>NOTICE</h5>
+
+            </div>
+          </div>
+          <img class="attrib attrib-background image" src="./static/wanted/karl-girl.png" alt="">
+          <div class="attrib attrib-background description2">
+            <div>
+              <p></p>
+              <h6>Wanted For Questioning</h6>
+              <h6>Last spotted: <b>Middlewig</b> </h6>
+              <h6>Wearing artire of notable attraction</h6>
+                Deliver to His most Prestigious and Honorable Judge Earhart Kliner
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- thammid -->
+    <div class="make-grid-container wrapper-style">
+      <div class="make-card printable">
+        <div class="grid-container card theme-font card-background">
+          <div class="attrib attrib-background description1">
+            <div>
+              <h3>REWARD</h5>
+                <h6>1 Gold Crown</h6>
+            </div>
+          </div>
+          <img class="attrib attrib-background image" src="./static/wanted/thammid.png" alt="">
+          <div class="attrib attrib-background description2">
+            <div>
+              <p></p>
+              <h6>Dwarf   Wanted For Murder of an estate man</h6>
+              <h6>Last spotted: <b>Middlewig</b> </h6>
+              <h6>Paid full if ALIVE, 5/- if DEAD</h6>
+              Deliver to His most Prestigious and Honorable Judge Earhart Kliner
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+<script src="bundle.js"></script>
+<script type="text/javascript">
+</script>
+<footer>
+  <div class="inline">Made by CCMD</div>
+</footer>
+
+</html>

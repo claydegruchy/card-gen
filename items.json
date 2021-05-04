@@ -944,7 +944,7 @@
     "description": ["Trap Blade"],
     "type": "BASIC",
     "kind": "weapon",
-    "flavour":"Dwarven weapon"
+    "flavour": "Dwarven weapon"
   },
 
   {
@@ -958,7 +958,7 @@
     "description": ["Pummel"],
     "type": "BASIC",
     "kind": "weapon",
-    "flavour":"Dwarven weapon"
+    "flavour": "Dwarven weapon"
   },
   {
     "title": "Slayers Axe",
@@ -972,7 +972,7 @@
     "type": "two-handed",
     "size": "two handed",
     "kind": "weapon",
-    "flavour":"Dwarven weapon"
+    "flavour": "Dwarven weapon"
   },
 
   {
@@ -985,8 +985,8 @@
     "cost": "1GC",
     "description": ["Hack"],
     "type": "BASIC",
-    "kind": "weapon"
-    ,"flavour":"Halfling weapon"
+    "kind": "weapon",
+    "flavour": "Halfling weapon"
   },
   {
     "title": "Iron Skillet",
@@ -998,8 +998,8 @@
     "cost": "1GC",
     "description": ["Defensive"],
     "type": "BASIC",
-    "kind": "weapon"
-    ,"flavour":"Halfling weapon"
+    "kind": "weapon",
+    "flavour": "Halfling weapon"
   },
 
 
