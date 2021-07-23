@@ -1,5 +1,7 @@
 body {
     text-size: 10px;
+    /*font-family: 'Helvetica', 'Arial', sans-serif;*/
+
 }
 
 @media screen {
@@ -15,7 +17,7 @@ body {
 
 
     .red {
-      border: 10px dotted red !important;
+        border: 10px dotted red !important;
     }
 
     .green {
@@ -255,7 +257,7 @@ path {
 .description {
     grid-area: description;
     text-align: justify;
-    /* font-size: 1em; */
+     font-size: 1.2em; 
     padding: 15px;
     text-transform: initial;
 }
