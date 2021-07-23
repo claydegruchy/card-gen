@@ -70,7 +70,7 @@ exports.data = async function() {
 
 
   var cardTemplate = Handlebars.compile(`
-<div class="grid-container card card-background">
+<div class="grid-container card card-background {{colour}}">
     <div class="attrib attrib-background title">{{title}}</div>
     <div class="attrib attrib-background damage">{{damage}}</div>
     <div class="attrib attrib-background reach">{{reach}}</div>
