@@ -3904,5 +3904,6 @@ n["colour"] = schoolColours[spell.School]
     newSpells.push(n)
 }
 
-console.log(JSON.stringify(newSpells.slice(0,8)))
+console.log(JSON.stringify(newSpells))
+// console.log(JSON.stringify(newSpells.slice(0,8)))
 console.log("stop")
