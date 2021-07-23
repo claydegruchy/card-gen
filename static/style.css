@@ -160,7 +160,7 @@ body {
     /*-o-background-size: cover;*/
     /*background-size: cover;*/
     background-size: 100% 100%;
-    filter: brightness(115%);
+    filter: brightness(125%);
     -webkit-print-color-adjust: exact;
 }
 
@@ -194,12 +194,11 @@ path {
     padding: 5px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 10px 10px;
     grid-template-areas:
         "weight title title rarity"
-        "type damage image image"
-        "reach size image image"
+        "type damage reach size"
         "description description description description"
         "description description description description"
         "description description description description"

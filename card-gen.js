@@ -1,5 +1,5 @@
 exports.data = async function() {
-  var items = require("./items.json");
+  var items = require("./dndSpells.json");
   var qualities = require("./qualities.json");
   var qualitiesMap = require("./qualityTypeMap.json");
 
@@ -75,11 +75,7 @@ exports.data = async function() {
     <div class="attrib attrib-background damage">{{damage}}</div>
     <div class="attrib attrib-background reach">{{reach}}</div>
     <div class="attrib attrib-background weight">{{{weight}}}</div>
-    <div class="attrib attrib-background image">
-        <div class="img">
-            {{{image}}}
-        </div>
-    </div>
+
     <div class="attrib attrib-background rarity">{{rarity}}</div>
     <div class="attrib attrib-background flavour">{{flavour}}</div>
     <div class="attrib attrib-background cost">{{cost}}</div>

@@ -132,7 +132,7 @@ window.addEventListener("load", async e => {
             // .filter(w => !["improvised", "fist"].includes(w.type.toLowerCase()))
 
             // console.log(cardGen.items)
-            var groupingOption = "type"
+            var groupingOption = "weight"
 
             // var filterOptions = [...new Set(cardGen.items.map(i => i[filterOption]))]
 
