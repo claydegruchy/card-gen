@@ -1,3 +1,5 @@
+var updateView
+
 window.addEventListener("load", async e => {
   const Swal = require('sweetalert2')
   var randomElement = array => array[Math.floor(Math.random() * array.length)];
@@ -167,7 +169,7 @@ window.addEventListener("load", async e => {
       //     onChange: updateView
       // });
 
-      var updateView = async function(selected) {
+       updateView = async function(selected) {
         //this is weird and stupid but basically it makes sense that we dont try to spwan the same card template twice
         selected = selected.map(s => s.value)
         this.pending = this.pending || []
@@ -247,17 +249,24 @@ window.addEventListener("load", async e => {
         })
         .then(o => JSON.parse(o.value))
         .then(o => {
+          console.log(o)
           if (!Array.isArray(o)) o = [o]
           return o
         })
         .then(async o => {
+          console.log(o)
           var simplePreset = cardGen.items.map(i => JSON.stringify(i))
           o = o.filter(i => !simplePreset.includes(JSON.stringify(i)))
           cardGen.items.push(...o)
 
-          await calculateDropdown()
+
+
+          var x = await calculateDropdown()
+
+          x.set(o.map(ve=>ve.title))
         })
         .then(m => {
+          console.log(m)
           if (m != 'success') {
             return ""
           } else {
